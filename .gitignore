@@ -1,0 +1,13 @@
+# FILES
+*.log
+.DS_Store
+package-lock.json
+
+# FOLDERS
+.tmp
+.sass-cache
+.vscode
+
+node_modules
+bower_components
+dist

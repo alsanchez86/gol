@@ -1,2 +1,3 @@
-# gol
+# GOL
+
 Game of life

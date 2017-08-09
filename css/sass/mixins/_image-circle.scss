@@ -1,0 +1,6 @@
+@mixin image-circle (
+  
+){
+  border-radius: 50%;
+  border: 7px solid $color-e0e0e0;
+}

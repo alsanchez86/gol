@@ -1,0 +1,66 @@
+body {}
+
+div.content {
+    padding: 3rem 0;
+}
+
+.form-controls {
+    button.btn-primary {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+div.console {
+    @include border(1px solid $primary-color-light, 5px);
+    height: 12rem;
+    margin-bottom: 1rem;
+    padding: 0.6rem;
+    overflow: scroll;
+
+    p {
+        margin-bottom: 0.3rem;
+
+        &.error {
+            color: red;
+        }
+
+        &.success {
+            color: green;
+        }
+    }
+}
+
+div.plateau-ready,
+div.start-content,
+div.plateau-output,
+div.robots-output,
+div.output-output {
+    display: none;
+}
+
+div.start-content {
+    display: none;
+    margin-bottom: 1rem;
+    
+    text-align: right;
+}
+
+div.output-output {
+    ul {
+        li {
+            font-weight: 700;
+        }
+    }
+}
+
+// GRID COMPONENT
+@include media-breakpoint-only(xs) {}
+
+@include media-breakpoint-only(sm) {}
+
+@include media-breakpoint-only(md) {}
+
+@include media-breakpoint-only(lg) {}
+
+@include media-breakpoint-only(xl) {}
