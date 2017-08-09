@@ -13,20 +13,29 @@
     <body>               
         <div class="main-container">
             <div class="container">
-                <h1>
-                    Game of life <small>DEMO</small>
-                </h1>
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <h1>
+                            Game of life <small>DEMO</small>
+                        </h1>
 
-                <h2>
-                    by <a href="https://github.com/alsanchez86" target="_blank">https://github.com/alsanchez86</a>
-                </h2>
+                        <h2>
+                            by <a href="https://github.com/alsanchez86" target="_blank">https://github.com/alsanchez86</a>
+                        </h2>
+                    </div>
 
-                <div id="plateau" class="plateau plateau-40-40">
-                    <div class="plateau-cell"></div>
-                </div>
+                    <div class="col-sm-12 col-md-4">
+                        <button id="start-gol" class="btn btn-primary">
+                            Start
+                        </button>
+                    </div>
+                </div>                
+
+                <div id="plateau" class="plateau"></div>
             </div>        
         </div>      
         
-        <script src="./dist/js/app.min.js"></script>
+        <!-- <script src="./dist/js/app.min.js"></script> -->
+        <script src="./dist/js/app.js"></script>
     </body>
 </html>

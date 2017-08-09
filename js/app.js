@@ -5,14 +5,19 @@ $(document).ready(function (){
     /*
         Generate plateau
     */
-    generatePlateau(40, 40);
+    generatePlateau(60, 60);
 
     /*
         Listener start gol
-    */
-    $('#start-gol')
+    */    
+    $cache
+        .get('#start-gol')
         .click (function (event){
-            event.preventDefault();            
+            event.preventDefault();
+
+            $cache
+                .get('#plateau')
+                .addClass('disabled');
         });           
 });
     

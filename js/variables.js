@@ -1,3 +1,5 @@
 /*
     Variables
 */
+         
+virtualPlateau  = {};
