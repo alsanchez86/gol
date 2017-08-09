@@ -3,8 +3,7 @@
 var gulp        = require('gulp'),
     sass        = require('gulp-sass'),
     cleanCSS    = require('gulp-clean-css'),
-    rename      = require('gulp-rename'),    
-    coffee      = require('gulp-coffee'),
+    rename      = require('gulp-rename'),        
     concat      = require('gulp-concat'),
     uglify      = require('gulp-uglify'),
     runSequence = require('run-sequence'),
@@ -65,20 +64,16 @@ gulp.task('js:libs', function() {
         );
 });
 
-gulp.task('js:coffee', function() {
-    return gulp.src([
-            // pkg.js + 'coffee/**/*.coffee'
-            pkg.js + 'coffee/common.coffee',
-            pkg.js + 'coffee/variables.coffee',
-            pkg.js + 'coffee/validations.coffee',
-            pkg.js + 'coffee/functions.coffee',
-            pkg.js + 'coffee/app.coffee'
+gulp.task('js:common', function() {
+    return gulp.src([            
+            pkg.js + 'common.js',
+            pkg.js + 'variables.js',
+            pkg.js + 'validations.js',
+            pkg.js + 'functions.js',
+            pkg.js + 'app.js'
         ])
         .pipe(
-            coffee({bare: true})
-        )
-        .pipe(
-            concat("coffee.js")
+            concat("common.js")
         )
         .pipe(
             gulp.dest(pkg.dist + 'js/')
@@ -88,7 +83,7 @@ gulp.task('js:coffee', function() {
 gulp.task('js:concat', function() {           
     return gulp.src([
             pkg.dist + 'js/libs.js',
-            pkg.dist + 'js/coffee.js'            
+            pkg.dist + 'js/common.js'            
         ])        
         .pipe(
             concat("app.js")
@@ -122,7 +117,7 @@ gulp.task('js:min', function() {
 // ----- TASKS ----- //
 gulp.task('watch', ['default'], function() {
     gulp.watch([
-        pkg.js +  'coffee/**/*.coffee',
+        pkg.js +  '**/*.js',
         pkg.css +  'sass/**/*.scss'
     ], ['default']);
 });
@@ -134,7 +129,7 @@ gulp.task('dev', [], function(done) {
 });
 
 gulp.task('prod', [], function(done) {    
-    runSequence('js:libs', 'js:coffee', 'js:concat', 'js:min', 'css:sass', 'css:min', function() {
+    runSequence('js:libs', 'js:common', 'js:concat', 'js:min', 'css:sass', 'css:min', function() {
         done();
     });
 });

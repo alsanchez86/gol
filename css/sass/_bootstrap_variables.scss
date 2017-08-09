@@ -261,13 +261,13 @@ $font-weight-base: $font-weight-normal !default;
 $line-height-base: 1.5 !default;
 
 $font-size-h1: 1.6rem !default;
-$font-size-h2: 1.3rem !default;
+$font-size-h2: 1rem !default;
 $font-size-h3: 1rem !default;
 $font-size-h4: 0.75rem !default;
 $font-size-h5: 1rem !default;
 $font-size-h6: 0.25rem !default;
 
-$headings-margin-bottom: $spacer !default;
+$headings-margin-bottom: $spacer / 2 !default;
 $headings-font-family:   inherit !default;
 $headings-font-weight:   300 !default;
 $headings-line-height:   1.1 !default;
