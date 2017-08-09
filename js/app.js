@@ -5,7 +5,10 @@ $(document).ready(function (){
     /*
         Generate plateau
     */
-    generatePlateau(60, 60);
+    // 1º -> rows
+    // 2º -> Columns
+    generatePlateau(20, 30);
+    generateCells(20, 30);
 
     /*
         Listener start gol
@@ -13,11 +16,8 @@ $(document).ready(function (){
     $cache
         .get('#start-gol')
         .click (function (event){
-            event.preventDefault();
-
-            $cache
-                .get('#plateau')
-                .addClass('disabled');
+            event.preventDefault();                        
+            start();
         });           
 });
     
