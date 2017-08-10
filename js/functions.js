@@ -103,7 +103,8 @@ var goOne = function () {
 };
 
 var checkCellLive = function (cell) {    
-    console.log(cell);
+    // si la celda no tiene ninguna otra celda viva en alguna de sus 8 casillas colindantes -> muere
+    // si la celda tiene 3 o más de alguna de sus 8 casillas colindantes en las que vive una celda -> muere
 };
 
 var disableUI = function (disable) {    

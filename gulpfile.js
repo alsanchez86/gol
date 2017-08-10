@@ -66,8 +66,7 @@ gulp.task('js:libs', function() {
 
 gulp.task('js:common', function() {
     return gulp.src([            
-            pkg.js + 'jquery-cache.js',
-            pkg.js + 'common.js',
+            pkg.js + 'jquery-cache.js',            
             pkg.js + 'variables.js',
             pkg.js + 'validations.js',
             pkg.js + 'functions.js',
