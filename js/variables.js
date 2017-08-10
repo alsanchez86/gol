@@ -1,19 +1,14 @@
 /*
     Variables
 */
-/*
-var cell = {
-    id:     "",
-    x:      0,
-    y:      0,
-    status: 0 //dead
+var cycle       = {
+    current:    0,
+    limit:      10,
+    time:       1000
 };
-*/  
 
-var virtualPlateau  = {
-    rows:       0,
-    columns:    0,
+var plateau     = {
+    rows:       60,
+    columns:    60,
     cells:      []
 };
-
-var started = 0;

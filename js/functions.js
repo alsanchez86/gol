@@ -3,105 +3,130 @@
 */
 
 /*
-    Generate plateau
+    Generate cells
 */
-var generatePlateau = function (rows, columns) {            
-    // Save
-    virtualPlateau.rows     = rows;
-    virtualPlateau.columns  = columns;
+var setCells = function (){    
+    for (i = 1; i <= plateau.rows; i++){ // rows        
+        for (u = 1; u <= plateau.columns; u++){ // columns           
+            plateau.cells.push({
+                id:     u + "-" + i,
+                x:      u,
+                y:      i,
+                status: false //dead
+            });
+        }        
+    }        
+};
 
-    // DOM
+/*
+    Paint scenario
+*/
+var paintScenario = function () {
+    // plateau
     $cache
         .get('#plateau')
         .css({
-            height: rows    + "vw",
-            width:  columns + "vw"
+            height: plateau.rows    + "vw",
+            width:  plateau.columns + "vw"
         });       
+
+    // cells
+    _.each(plateau.cells, function (cell) {        
+        $('<div/>')
+            .attr({
+                id: cell.id
+            })                
+            .addClass('plateau-cell')                
+            .appendTo(
+                $cache.get('#plateau')
+            )                
+            .click(function (event){                   
+                cellClick(event);
+            });
+    });   
 };
 
-/*
-    Generate cells
-*/
-var generateCells = function (rows, columns){
-    // Generate cells
-    for (i = 1; i <= rows; i++){ // rows        
-        for (u = 1; u <= columns; u++){ // columns
-            generateCell(u, i);                        
-        }        
-    }        
-}
-
-/*
-    Generate cell
-*/
-var generateCell = function (u, i) {            
-    var cell = {
-        id:     u + "-" + i,
-        x:      u,
-        y:      i,
-        status: 0 //dead
-    };    
-
-    // Save
-    virtualPlateau.cells.push(cell);    
-
-    // DOM
-    $('<div/>')
-        .attr({
-            id: cell.id
-        })                
-        .addClass('plateau-cell')                
-        .appendTo(
-            $cache.get('#plateau')
-        )                
-        .click(function (event){                   
-            cellClick(event);
-        });
-};
-
-/*
-    Cell click listener
-*/
-var cellClick = function (event) {          
-    // App started
-    if (started){
-        return;
-    }  
-
-    // Get virtual cell
-    var cell = _.findWhere(virtualPlateau.cells, {id: event.currentTarget.id});
-    
-    debugger;
-
-    // Update virtual cell
-    $cache.get("#" + event.currentTarget.id)
-
-    // Paint
-    if ($cache.get("#" + event.currentTarget.id).hasClass('live')){        
+var paintCellStatus = function (status, id) {    
+    if (!status){
         $cache
-            .get("#" + event.currentTarget.id)
+            .get("#" + id)
             .removeClass('live');
         return;
     }    
 
     $cache
-        .get("#" + event.currentTarget.id)
+        .get("#" + id)
         .addClass('live');
+};
+
+/*
+    Cell click listener
+*/
+var cellClick = function (event) {              
+    if (cycle.current > 0) return;
+
+    var id      = event.currentTarget.id;
+    var cell    = _.findWhere(plateau.cells, {id: id});
+
+    cell.status = !cell.status; 
+    paintCellStatus(cell.status, id);   
 };
 
 /* 
     Start GOL
 */
 var start = function (){
-    if (started){
-        return;
-    } 
+    if (cycle.current > 0) return;
+    
+    disableUI(true);      
 
-    started = 1;
+    var interval = setInterval(function(){        
+        goOne();
+        cycle.current++;
 
+        if (cycle.current === cycle.limit){
+            // reset
+            cycle.current = 0; 
+            disableUI(false);
+            clearInterval(interval);
+        } 
+
+    }, cycle.time);    
+};
+
+var goOne = function () {    
+    _.chain(plateau.cells)
+    .where({status: true})
+    .each(function (cell) {
+        checkCellLive(cell);
+    });     
+};
+
+var checkCellLive = function (cell) {    
+    console.log(cell);
+};
+
+var disableUI = function (disable) {    
+    if (disable){
+        // plateau
+        $cache
+            .get('#plateau')
+            .addClass('disabled');
+
+        // start button
+        $cache
+            .get('#start-gol')
+            .addClass('disabled');
+        return;    
+    }
+
+    // plateau
     $cache
         .get('#plateau')
-        .addClass('disabled');
+        .removeClass('disabled');
 
-    console.log(virtualPlateau);
+    // start button
+    $cache
+        .get('#start-gol')
+        .removeClass('disabled');
 };

@@ -1,18 +1,12 @@
 /*
     APP
 */
-$(document).ready(function (){
-    /*
-        Generate plateau
-    */
-    // 1º -> rows
-    // 2º -> Columns
-    generatePlateau(20, 30);
-    generateCells(20, 30);
 
-    /*
-        Listener start gol
-    */    
+$(document).ready(function (){            
+    setCells();
+    paintScenario();        
+
+    // Listener start gol button        
     $cache
         .get('#start-gol')
         .click (function (event){
