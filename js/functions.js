@@ -7,13 +7,16 @@
 */
 var setCells = function (){    
     for (i = 1; i <= plateau.rows; i++){ // rows        
-        for (u = 1; u <= plateau.columns; u++){ // columns           
-            plateau.cells.push({
-                id:     u + "-" + i,
-                x:      u,
-                y:      i,
-                status: false //dead
-            });
+        for (u = 1; u <= plateau.columns; u++){ // columns    
+            var cell = {
+                id:             u + "-" + i,
+                x:              u,
+                y:              i,
+                status:         false, //dead
+                cycleStatus:    false //dead
+            };
+            
+            plateau.cells.push(cell);
         }        
     }        
 };
@@ -31,18 +34,20 @@ var paintScenario = function () {
         });       
 
     // cells
-    _.each(plateau.cells, function (cell) {        
-        $('<div/>')
-            .attr({
-                id: cell.id
-            })                
-            .addClass('plateau-cell')                
-            .appendTo(
-                $cache.get('#plateau')
-            )                
-            .click(function (event){                   
-                cellClick(event);
-            });
+    _.each(
+        plateau.cells, 
+        function (cell) {        
+            $('<div/>')
+                .attr({
+                    id: cell.id
+                })                
+                .addClass('plateau-cell')                
+                .appendTo(
+                    $cache.get('#plateau')
+                )                
+                .click(function (event){                   
+                    cellClick(event);
+                });
     });   
 };
 
@@ -96,15 +101,86 @@ var start = function (){
 
 var goOne = function () {    
     _.chain(plateau.cells)
-    .where({status: true})
-    .each(function (cell) {
-        checkCellLive(cell);
-    });     
+        .where({
+            status: true
+        })
+        .each(function (cell) {
+            cell.cycleStatus = checkCellStatus(cell);
+        });    
+    
+    endOne();
 };
 
-var checkCellLive = function (cell) {    
-    // si la celda no tiene ninguna otra celda viva en alguna de sus 8 casillas colindantes -> muere
-    // si la celda tiene 3 o más de alguna de sus 8 casillas colindantes en las que vive una celda -> muere
+var endOne = function (){    
+    _.each(
+        plateau.cells, 
+        function (element) {
+            // 1.- setear el status de cada celda con su cycleStatus
+            element.status = element.cycleStatus;
+
+            // 2.- Pintar el status en el front
+            paintCellStatus(element.status, element.id);
+        }
+    );    
+};
+
+var checkCellStatus = function (cell) {    
+    /*
+    Para un espacio que es 'poblado':
+        Cada celda con uno o ningún vecino          -> muere.
+        Cada célula con cuatro o más vecinos        -> muere.
+        Cada célula con igual o menos de 3 vecinos  -> vive.
+    
+    Para un espacio que es 'vacío' o 'despoblado':
+        Cada celda vacía con tres o más vecinos     -> vive.
+    */        
+
+    var colindantes = getColindantes(cell);      
+
+    // Cada celda con uno o ningún vecino -> muere.
+    if (ruleOne(cell, colindantes)){
+        return false;
+    }
+};
+
+var ruleOne = function (cell, colindantes) {
+    var lives = [];
+
+    // Cada celda con uno o ningún vecino -> muere.
+    _.each(
+        colindantes, 
+        function (element) {
+            if (element.status){
+                lives.push(element);
+            }
+        }
+    );
+
+    if (lives.length <= 1){
+        return false;
+    }
+
+    return true;
+};
+
+var getColindantes = function (cell){    
+    var colindantes = [];
+
+    for(var i = 0; i < colindantesAxis.length; i++){
+        var colindante = _.findWhere(
+            plateau.cells, 
+            {
+                x: cell.x + colindantesAxis[i].x,
+                y: cell.y + colindantesAxis[i].y
+            }
+        );
+
+        if (_.size(colindante)){
+            colindantes.push(colindante);
+        }        
+    }
+
+    return colindantes;
 };
 
 var disableUI = function (disable) {    
