@@ -1,4 +1,0 @@
-/*
-    VALIDATIONS FUNCTIONS
-*/
-

@@ -12,106 +12,105 @@ var gulp        = require('gulp'),
 
 gulp.task('css:sass', function() {
     return gulp.src([
-            pkg.css + 'sass/app.scss'
-        ])
-        .pipe(
-            sass.sync()
-            .on('error', sass.logError)
-        )
-        .pipe(
-            gulp.dest(pkg.dist + 'css/')
-        );
+        pkg.css + 'sass/app.scss'
+    ])
+    .pipe(
+        sass.sync()
+        .on('error', sass.logError)
+    )
+    .pipe(
+        gulp.dest(pkg.dist + 'css/')
+    );
 });
 
 gulp.task('css:min', function() {
     return gulp.src([            
-            pkg.dist + 'css/app.css'            
-        ])
-        .pipe(
-            cleanCSS({
-                compatibility: 'ie8'
-            })
-        )
-        .pipe(
-            rename({
-                suffix: '.min'
-            })
-        )
-        .pipe(
-            gulp.dest(pkg.dist + 'css/')
-        );
+        pkg.dist + 'css/app.css'            
+    ])
+    .pipe(
+        cleanCSS({
+            compatibility: 'ie8'
+        })
+    )
+    .pipe(
+        rename({
+            suffix: '.min'
+        })
+    )
+    .pipe(
+        gulp.dest(pkg.dist + 'css/')
+    );
 });
 
 gulp.task('js:libs', function() {
     return gulp.src([            
-            // jquery
-            pkg.bower_components + 'jquery/dist/jquery.min.js',
+        // jquery
+        pkg.bower_components + 'jquery/dist/jquery.min.js',
 
-            // tether
-            pkg.bower_components + 'tether/dist/js/tether.min.js',
+        // tether
+        pkg.bower_components + 'tether/dist/js/tether.min.js',
 
-            // bootstrap
-            pkg.bower_components + 'bootstrap/dist/js/bootstrap.min.js',
+        // bootstrap
+        pkg.bower_components + 'bootstrap/dist/js/bootstrap.min.js',
 
-            // underscore
-            pkg.bower_components + 'underscore/underscore-min.js'
-        ])
-        .pipe(
-            concat("libs.js")
-        )
-        .pipe(
-            gulp.dest(pkg.dist + 'js/')
-        );
+        // underscore
+        pkg.bower_components + 'underscore/underscore-min.js'
+    ])
+    .pipe(
+        concat("libs.js")
+    )
+    .pipe(
+        gulp.dest(pkg.dist + 'js/')
+    );
 });
 
 gulp.task('js:common', function() {
     return gulp.src([            
-            pkg.js + 'jquery-cache.js',            
-            pkg.js + 'variables.js',
-            pkg.js + 'validations.js',
-            pkg.js + 'functions.js',
-            pkg.js + 'app.js'
-        ])
-        .pipe(
-            concat("common.js")
-        )
-        .pipe(
-            gulp.dest(pkg.dist + 'js/')
-        );
+        pkg.js + 'jquery-cache.js',            
+        pkg.js + 'variables.js',            
+        pkg.js + 'functions.js',
+        pkg.js + 'app.js'
+    ])
+    .pipe(
+        concat("common.js")
+    )
+    .pipe(
+        gulp.dest(pkg.dist + 'js/')
+    );
 });
 
 gulp.task('js:concat', function() {           
     return gulp.src([
-            pkg.dist + 'js/libs.js',
-            pkg.dist + 'js/common.js'            
-        ])        
-        .pipe(
-            concat("app.js")
-        )
-        .pipe(
-            gulp.dest(pkg.dist + 'js/')
-        );       
+        pkg.dist + 'js/libs.js',
+        pkg.dist + 'js/common.js'            
+    ])        
+    .pipe(
+        concat("app.js")
+    )
+    .pipe(
+        gulp.dest(pkg.dist + 'js/')
+    );       
 });
 
 gulp.task('js:min', function() {
     return gulp.src([                        
-            pkg.dist + 'js/**/*.js',
-            '!' + pkg.dist + 'js/**/*.min.js'
-        ])
-        .pipe(
-            uglify()
-                .on('error', function(e){
-                    console.log(e);
-                })
-        )
-        .pipe(
-            rename({
-                suffix: '.min'
+        pkg.dist + 'js/**/*.js',
+        '!' + pkg.dist + 'js/**/*.min.js'
+    ])
+    .pipe(
+        uglify()
+            .on('error', function(e){
+                console.log(e);
             })
-        )
-        .pipe(
-            gulp.dest(pkg.dist + 'js/')
-        );
+    )
+    .pipe(
+        rename({
+            suffix: '.min'
+        })
+    )
+    .pipe(
+        gulp.dest(pkg.dist + 'js/')
+    );
 });
 
 // ----- TASKS ----- //

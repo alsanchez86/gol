@@ -86,6 +86,8 @@ var start = function (){
     disableUI(true);      
 
     var interval = setInterval(function(){        
+        console.log("Current cycle: " + cycle.current);
+
         goOne();
         cycle.current++;
 
@@ -95,18 +97,15 @@ var start = function (){
             disableUI(false);
             clearInterval(interval);
         } 
-
+        
     }, cycle.time);    
 };
 
-var goOne = function () {    
-    _.chain(plateau.cells)
-        .where({
-            status: true
-        })
+var goOne = function () {        
+    _.chain(plateau.cells)        
         .each(function (cell) {
             cell.cycleStatus = checkCellStatus(cell);
-        });    
+        });       
     
     endOne();
 };
@@ -122,45 +121,6 @@ var endOne = function (){
             paintCellStatus(element.status, element.id);
         }
     );    
-};
-
-var checkCellStatus = function (cell) {    
-    /*
-    Para un espacio que es 'poblado':
-        Cada celda con uno o ningún vecino          -> muere.
-        Cada célula con cuatro o más vecinos        -> muere.
-        Cada célula con igual o menos de 3 vecinos  -> vive.
-    
-    Para un espacio que es 'vacío' o 'despoblado':
-        Cada celda vacía con tres o más vecinos     -> vive.
-    */        
-
-    var colindantes = getColindantes(cell);      
-
-    // Cada celda con uno o ningún vecino -> muere.
-    if (ruleOne(cell, colindantes)){
-        return false;
-    }
-};
-
-var ruleOne = function (cell, colindantes) {
-    var lives = [];
-
-    // Cada celda con uno o ningún vecino -> muere.
-    _.each(
-        colindantes, 
-        function (element) {
-            if (element.status){
-                lives.push(element);
-            }
-        }
-    );
-
-    if (lives.length <= 1){
-        return false;
-    }
-
-    return true;
 };
 
 var getColindantes = function (cell){    
@@ -206,4 +166,66 @@ var disableUI = function (disable) {
     $cache
         .get('#start-gol')
         .removeClass('disabled');
+};
+
+var checkCellStatus = function (cell) {                
+    var colindantes = getColindantes(cell);          
+    
+    // celdas vivas
+    if (cell.status){
+        return liveCell(cell, colindantes);
+    }    
+
+    // celdas muertas    
+    if (! cell.status){
+        return deadCell(cell, colindantes);
+    }            
+};
+
+/*
+    Para un espacio que es 'poblado':
+        Cada celda con uno o ningún vecino          -> muere.
+        Cada célula con cuatro o más vecinos        -> muere.
+        Cada célula con igual o menos de 3 vecinos  -> vive.
+*/
+var liveCell = function (cell, colindantes) {
+    var lives = [];
+    
+    _.each(
+        colindantes, 
+        function (element) {
+            if (element.status){
+                lives.push(element);
+            }
+        }
+    );
+
+    if (lives.length <= 1 || lives.length >= 4){        
+        return false;
+    }
+
+    return true;
+};
+
+/*       
+    Para un espacio que es 'vacío' o 'despoblado':
+        Cada celda vacía con tres o más vecinos -> vive.
+*/
+var deadCell = function (cell, colindantes) {
+    var lives = [];
+    
+    _.each(
+        colindantes, 
+        function (element) {
+            if (element.status){
+                lives.push(element);
+            }
+        }
+    );
+
+    if (lives.length >= 3){        
+        return true;
+    }
+
+    return false;
 };
