@@ -2,16 +2,28 @@
     APP
 */
 
-$(document).ready(function (){            
+$(document).ready(function () {
     setCells();
-    paintScenario();        
+    paintScenario();
 
-    // Listener start gol button        
+    // start gol button
     $cache
-        .get('#start-gol')
-        .click (function (event){
-            event.preventDefault();                        
+        .get('#btn-start-gol')
+        .click(function () {
             start();
-        });           
+        });
+
+    // pause gol button
+    $cache
+        .get('#btn-pause-gol')
+        .click(function () {
+            pause();
+        });
+
+    // reset gol button
+    $cache
+        .get('#btn-reset-gol')
+        .click(function () {
+            reset();
+        });
 });
-    

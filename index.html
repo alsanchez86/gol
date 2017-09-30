@@ -1,45 +1,55 @@
 <!doctype html>
 <html lang="es" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Game of life DEMO</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="./dist/css/app.min.css">
-    </head>
+    <title>Game of life DEMO</title>
 
-    <body>               
-        <div class="main-container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        <h1>
-                            Game of life <small>DEMO</small>
-                        </h1>
+    <link rel="stylesheet" href="./dist/css/app.min.css">
+</head>
 
-                        <h2>
-                            by <a href="https://github.com/alsanchez86" target="_blank">https://github.com/alsanchez86</a>
-                        </h2>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <h1>
+                        Game of life <small>DEMO</small>
+                    </h1>
 
-                        <p>
-                            <a href="https://www.youtube.com/watch?v=CgOcEZinQ2I" target="_blank">https://www.youtube.com/watch?v=CgOcEZinQ2I</a>
-                        </p>
-                    </div>
+                    <h2>
+                        by <a href="https://github.com/alsanchez86" target="_blank">https://github.com/alsanchez86</a>
+                    </h2>
 
-                    <div class="col-sm-12 col-md-4">
-                        <button id="start-gol" class="btn btn-primary">
-                            Start
-                        </button>
-                    </div>
-                </div>                                
-            </div>        
+                    <p>
+                        <a href="https://www.youtube.com/watch?v=CgOcEZinQ2I" target="_blank">https://www.youtube.com/watch?v=CgOcEZinQ2I</a>
+                    </p>
+                </div>
 
-            <div id="plateau" class="plateau"></div>
-        </div>      
-        
-        <!-- <script src="./dist/js/app.min.js"></script> -->
-        <script src="./dist/js/app.js"></script>
-    </body>
+                <div class="col-sm-12 col-md-4">
+                    <button id="btn-start-gol" class="btn btn-primary">
+                        <i class="fa fa-play" aria-hidden="true"></i>
+                    </button>
+
+                    <button id="btn-pause-gol" class="btn btn-warning" disabled>                            
+                        <i class="fa fa-pause" aria-hidden="true"></i>
+                    </button>
+
+                    <button id="btn-reset-gol" class="btn btn-cancel">
+                        <i class="fa fa-stop" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="plateau" class="plateau"></div>
+    </div>
+
+    <!-- <script src="./dist/js/app.min.js"></script> -->
+    <script src="./dist/js/app.js"></script>
+</body>
+
 </html>

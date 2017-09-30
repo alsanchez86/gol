@@ -10,6 +10,7 @@ div.plateau {
     background-color: #000;
     overflow: hidden;    
 
+    &[disabled],
     &.disabled {       
         div.plateau-cell {
             pointer-events: none;
@@ -21,8 +22,8 @@ div.plateau {
     }
 
     div.plateau-cell {        
-        height: 1vw;
-        width: 1vw;
+        height: $cell-size;
+        width: $cell-size;
         float: left;
 
         -webkit-box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1); 
@@ -32,6 +33,14 @@ div.plateau {
 
         &.live {
             background-color: #FFF000;
+        }
+
+        &.highlight {
+            background-color: #FF0000;
+        }
+
+        &.highlight-colindante {
+            background-color: #000FFF;
         }
     }
 }
