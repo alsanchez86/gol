@@ -131,15 +131,27 @@ var goOne = function () {
     });
 
     if (lives.length > 0) {
+        // determine cycleStatus by status
         _.each(lives, function (cell) {
             // get colindantes
             var colindantes = getColindantes(cell);
 
             // check current cell status
-            cell.cycleStatus = checkCellStatus(cell, colindantes);
+            cell.cycleStatus = checkCellStatus(cell, colindantes, 'status');
 
             // check deads colindantes for better performance
-            checkDeadsColindantes(colindantes);
+            checkDeadsColindantes(colindantes);            
+        });
+
+        // validate cycleStatus by cycleStatus
+        _.each(plateau.cells, function (cell) {
+            if (cell.cycleStatus && cell.status != cell.cycleStatus){                
+                // get colindantes
+                var colindantes = getColindantes(cell);
+
+                // check current cell status
+                cell.cycleStatus = checkCellStatus(cell, colindantes, 'cycleStatus');                
+            }
         });
 
         endOne();
@@ -157,7 +169,7 @@ var checkDeadsColindantes = function (colindantes) {
 
         if (!colindante.status) {
             colindantesColindantes = getColindantes(colindante);
-            colindante.cycleStatus = checkCellStatus(colindante, colindantesColindantes);
+            colindante.cycleStatus = checkCellStatus(colindante, colindantesColindantes, 'status');
         }
     }
 };
@@ -227,61 +239,26 @@ var startedUi = function () {
         .attr('disabled', true);
 };
 
-var checkCellStatus = function (cell, colindantes) {
-    // celdas vivas
-    if (cell.status) {
-        return liveCell(cell, colindantes);
-    }
-
-    // celdas muertas    
-    if (!cell.status) {
-        return deadCell(cell, colindantes);
-    }
+/*    
+    Cada celda con uno o ningún vecino          -> muere.
+    Cada celda con 3 o más vecinos              -> muere.
+    Cada celda con 2 o 3 vecinos                -> vive.        
+*/
+var checkCellStatus = function (cell, colindantes, field) {
+    return field === 'status' ? livesCells(cell, colindantes, field) === 3 : livesCells(cell, colindantes, field) <= 3;
 };
 
-/*
-    Para un espacio que es 'poblado':
-        Cada celda con uno o ningún vecino          -> muere.
-        Cada célula con cuatro o más vecinos        -> muere.
-        Cada célula con igual o menos de 3 vecinos  -> vive.
-*/
-var liveCell = function (cell, colindantes) {
+var livesCells = function (cell, colindantes, field) {
     var lives = [];
 
     _.each(
         colindantes,
         function (element) {
-            if (element.status) {
+            if (element[field]) {
                 lives.push(element);
             }
         }
     );
 
-    if (lives.length <= 1 || lives.length >= 4) {
-        return false;
-    }
-    return true;
-};
-
-/*       
-    Para un espacio que es 'vacío' o 'despoblado':
-        Cada celda vacía con tres o más vecinos -> vive.
-*/
-var deadCell = function (cell, colindantes) {
-    var lives = [];
-
-    _.each(
-        colindantes,
-        function (element) {
-            if (element.status) {
-                lives.push(element);
-            }
-        }
-    );
-
-    if (lives.length >= 3) {
-        return true;
-    }
-
-    return false;
+    return lives.length;    
 };
