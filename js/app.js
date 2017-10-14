@@ -1,29 +1,15 @@
-/*
-    APP
-*/
+// For any third party dependencies, like jQuery, place them in the lib folder.
 
-$(document).ready(function () {
-    setCells();
-    paintScenario();
-
-    // start gol button
-    $cache
-        .get('#btn-start-gol')
-        .click(function () {
-            start();
-        });
-
-    // pause gol button
-    $cache
-        .get('#btn-pause-gol')
-        .click(function () {
-            pause();
-        });
-
-    // reset gol button
-    $cache
-        .get('#btn-reset-gol')
-        .click(function () {
-            reset();
-        });
+// Configure loading modules from the lib directory,
+// except for 'app' ones, which are in a sibling
+// directory.
+requirejs.config({
+    baseUrl: 'lib',
+    paths: {
+        app: '../app'
+    }
 });
+
+// Start loading the main app file. Put all of
+// your application logic in there.
+requirejs(['app/main']);

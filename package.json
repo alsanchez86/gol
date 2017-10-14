@@ -7,17 +7,14 @@
     "url": "https://github.com/alsanchez86/gol.git"
   },
   "css": "./css/",
-  "js": "./js/",
   "node_modules": "./node_modules/",
   "bower_components": "./bower_components/",
   "dist": "./dist/",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.0",
-    "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0",
     "requirejs": "*",
     "run-sequence": "^2.2.0"
   }
