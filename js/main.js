@@ -26,8 +26,16 @@ define([
                         f.reset();
                     });
 
-                f.setCells();
-                f.paintScenario();
+                $cache
+                    .get('#btn-plateau-generator')
+                    .click(function () {
+                        var rows    = parseInt($cache.get('#form-rows').val()),
+                            columns = parseInt($cache.get('#form-columns').val());
+
+                        f.setPlateau(rows, columns);
+                        f.setCells();
+                        f.paintScenario();
+                    });                
             });
         });
     });

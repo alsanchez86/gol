@@ -6,6 +6,11 @@ define([
 
     var f = {};
 
+    f.setPlateau = function (rows, columns) {
+        v.plateau.rows = rows;
+        v.plateau.columns = columns;
+    };
+
     f.setCells = function () {
         for (i = 1; i <= v.plateau.rows; i++) { // rows        
             for (u = 1; u <= v.plateau.columns; u++) { // columns    

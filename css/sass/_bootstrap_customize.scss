@@ -4,7 +4,7 @@
 
 // buttons cursor pointer by default
 .btn {
-    @include text ($roboto, 0.8rem, 400, normal, $primary-color-text, center, capitalize, 100%);    
+    @include text ($roboto, 0.8rem, 400, normal, $primary-text-color, center, capitalize, 100%);    
     padding: 0.6rem 1rem;
     cursor: pointer;        
 }

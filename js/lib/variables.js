@@ -11,8 +11,8 @@ define(function () {
     };
 
     v.plateau = {
-        rows: 60,
-        columns: 60,
+        rows: 0,
+        columns: 0,
         cells: []
     };
 
