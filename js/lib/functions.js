@@ -1,4 +1,4 @@
-define(['lib/jquery-cache', 'lib/variables',], function ($cache, vars) {
+define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, vars, _) {
     var functions = {};
 
     functions.setCells = function () {
