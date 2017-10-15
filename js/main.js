@@ -1,51 +1,37 @@
 define([
-    "jquery",
-    "underscore"   
-],
-function ($, _) {
-    
-});
+        'lib/jquery-cache',
+        'lib/variables',
+        'lib/functions'
+    ],
+    function ($cache, vars, func) {
+        $(function () {
+            $(document).ready(function () {
+                setCells();
+                // paintScenario();          
 
-/*
-define(function (require) {
-    var $ = require('jquery');
-    var tether = require('tether');
-    var bootstrap = require('bootstrap');
-    var underscore = require('underscore');
+                // start gol button
+                $cache
+                    .get('#btn-start-gol')
+                    .click(function () {
+                        console.log('START');
+                        // start();
+                    });
 
-    /*
-    
-    var $cache = require('jquery-cache');
-    var $cache = require('jquery-cache');
-    var functions = require('functions');
+                /*
+                // pause gol button
+                $cache
+                    .get('#btn-pause-gol')
+                    .click(function () {
+                        pause();
+                    });
 
-    $(function () {
-        $(document).ready(function () {
-            setCells();
-            paintScenario();
-
-            // start gol button
-            $cache
-                .get('#btn-start-gol')
-                .click(function () {
-                    start();
-                });
-
-            // pause gol button
-            $cache
-                .get('#btn-pause-gol')
-                .click(function () {
-                    pause();
-                });
-
-            // reset gol button
-            $cache
-                .get('#btn-reset-gol')
-                .click(function () {
-                    reset();
-                });
+                // reset gol button
+                $cache
+                    .get('#btn-reset-gol')
+                    .click(function () {
+                        reset();
+                    });
+                */
+            });
         });
     });
-    
-});
-*/
