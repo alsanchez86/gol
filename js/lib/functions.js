@@ -1,9 +1,9 @@
-define(function () {
+define(['lib/jquery-cache', 'lib/variables',], function ($cache, vars) {
     var functions = {};
 
     functions.setCells = function () {
-        for (i = 1; i <= plateau.rows; i++) { // rows        
-            for (u = 1; u <= plateau.columns; u++) { // columns    
+        for (i = 1; i <= vars.plateau.rows; i++) { // rows        
+            for (u = 1; u <= vars.plateau.columns; u++) { // columns    
                 var cell = {
                     id: u + "-" + i,
                     x: u,
@@ -12,7 +12,7 @@ define(function () {
                     cycleStatus: false //dead
                 };
 
-                plateau.cells.push(cell);
+                vars.plateau.cells.push(cell);
             }
         }
     };
@@ -22,13 +22,13 @@ define(function () {
         $cache
             .get('#plateau')
             .css({
-                height: plateau.rows + "vw",
-                width: plateau.columns + "vw"
+                height: vars.plateau.rows + "vw",
+                width: vars.plateau.columns + "vw"
             });
 
         // cells
         _.each(
-            plateau.cells,
+            vars.plateau.cells,
             function (cell) {
                 $('<div/>')
                     .attr({
@@ -38,8 +38,8 @@ define(function () {
                     .appendTo(
                         $cache.get('#plateau')
                     )
-                    .click(function (event) {
-                        cellClick(event);
+                    .click(function (event) {                       
+                        functions.cellClick(event);
                     });
             });
     };
@@ -58,62 +58,63 @@ define(function () {
     };
 
     functions.cellClick = function (event) {
-        if (cycle.running) {
+        if (vars.cycle.running) {
             return;
         }
 
         var id = event.currentTarget.id;
-        var cell = _.findWhere(plateau.cells, {
+        var cell = _.findWhere(vars.plateau.cells, {
             id: id
         });
 
         cell.status = !cell.status;
-        paintCellStatus(cell.status, id);
+        functions.paintCellStatus(cell.status, id);
     };
 
     functions.initInterval = function () {
-        cycle.interval = setInterval(function () {
-            var lives = goOne();
+        vars.cycle.interval = setInterval(function () {
+            var lives = functions.goOne();
 
-            if (lives.length === 0 || (!!cycle.limit && (cycle.current === cycle.limit))) {
+            if (lives.length === 0 || (!!vars.cycle.limit && (vars.cycle.current === vars.cycle.limit))) {
                 console.log('GAME OVER');
-                reset();
+                functions.reset();
                 return;
             }
 
-            cycle.current++;
-            console.log("Cycle: " + cycle.current);
+            vars.cycle.current++;
+            console.log("Cycle: " + vars.cycle.current);
 
-        }, cycle.time);
+        }, vars.cycle.time);
     };
 
     functions.start = function () {
-        cycle.running = true;
-        startedUi();
-        initInterval();
+        vars.cycle.running = true;
+        functions.startedUi();
+        functions.initInterval();
     };
 
     functions.pause = function () {
-        cycle.running = false;
-        startedUi();
-        clearInterval(cycle.interval);
+        vars.cycle.running = false;
+        functions.startedUi();
+        clearInterval(vars.cycle.interval);
     };
 
     functions.reset = function () {
-        cycle.running = false;
-        cycle.current = 0;
-        startedUi();
-        clearInterval(cycle.interval);
+        vars.cycle.running = false;
+        vars.cycle.current = 0;
 
-        _.each(plateau.cells, function (cell) {
+        functions.startedUi();
+        clearInterval(vars.cycle.interval);
+
+        _.each(vars.plateau.cells, function (cell) {
             cell.cycleStatus = false;
             cell.status = false;
-            paintCellStatus(cell.status, cell.id);
+            functions.paintCellStatus(cell.status, cell.id);
         });
     };
 
     functions.goOne = function () {
-        var lives = _.filter(plateau.cells, function (cell) {
+        var lives = _.filter(vars.plateau.cells, function (cell) {
             return cell.status;
         });
 
@@ -121,27 +122,27 @@ define(function () {
             // determine cycleStatus by status
             _.each(lives, function (cell) {
                 // get colindantes
-                var colindantes = getColindantes(cell);
+                var colindantes = functions.getColindantes(cell);
 
                 // check current cell status
-                cell.cycleStatus = checkCellStatus(cell, colindantes, 'status');
+                cell.cycleStatus = functions.checkCellStatus(cell, colindantes, 'status');
 
                 // check deads colindantes for better performance
-                checkDeadsColindantes(colindantes);
+                functions.checkDeadsColindantes(colindantes);
             });
 
             // validate cycleStatus by cycleStatus
-            _.each(plateau.cells, function (cell) {
+            _.each(vars.plateau.cells, function (cell) {
                 if (cell.cycleStatus && cell.status != cell.cycleStatus) {
                     // get colindantes
-                    var colindantes = getColindantes(cell);
+                    var colindantes = functions.getColindantes(cell);
 
                     // check current cell status
-                    cell.cycleStatus = checkCellStatus(cell, colindantes, 'cycleStatus');
+                    cell.cycleStatus = functions.checkCellStatus(cell, colindantes, 'cycleStatus');
                 }
             });
 
-            endOne();
+            functions.endOne();
         }
 
         return lives;
@@ -155,18 +156,18 @@ define(function () {
             colindante = colindantes[i];
 
             if (!colindante.status) {
-                colindantesColindantes = getColindantes(colindante);
-                colindante.cycleStatus = checkCellStatus(colindante, colindantesColindantes, 'status');
+                colindantesColindantes = functions.getColindantes(colindante);
+                colindante.cycleStatus = functions.checkCellStatus(colindante, colindantesColindantes, 'status');
             }
         }
     };
 
     functions.endOne = function () {
         _.each(
-            plateau.cells,
+            vars.plateau.cells,
             function (cell) {
                 cell.status = cell.cycleStatus;
-                paintCellStatus(cell.status, cell.id);
+                functions.paintCellStatus(cell.status, cell.id);
             }
         );
     };
@@ -174,11 +175,11 @@ define(function () {
     functions.getColindantes = function (cell) {
         var colindantes = [];
 
-        for (var i = 0; i < colindantesAxis.length; i++) {
+        for (var i = 0; i < vars.colindantesAxis.length; i++) {
             var colindante = _.findWhere(
-                plateau.cells, {
-                    x: cell.x + colindantesAxis[i].x,
-                    y: cell.y + colindantesAxis[i].y
+                vars.plateau.cells, {
+                    x: cell.x + vars.colindantesAxis[i].x,
+                    y: cell.y + vars.colindantesAxis[i].y
                 }
             );
 
@@ -191,7 +192,7 @@ define(function () {
     };
 
     functions.startedUi = function () {
-        if (cycle.running) {
+        if (vars.cycle.running) {
             // plateau
             $cache
                 .get('#plateau')
@@ -232,7 +233,7 @@ define(function () {
             Cada celda con 3 o más vecinos              -> muere.
             Cada celda con 2 o 3 vecinos                -> vive.        
         */
-        return field === 'status' ? livesCells(cell, colindantes, field) === 3 : livesCells(cell, colindantes, field) <= 3;
+        return field === 'status' ? functions.livesCells(cell, colindantes, field) === 3 : functions.livesCells(cell, colindantes, field) <= 3;
     };
 
     functions.livesCells = function (cell, colindantes, field) {
@@ -249,4 +250,6 @@ define(function () {
 
         return lives.length;
     };
+
+    return functions;
 });

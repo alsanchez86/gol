@@ -6,18 +6,16 @@ define([
     function ($cache, vars, func) {
         $(function () {
             $(document).ready(function () {
-                setCells();
-                // paintScenario();          
+                func.setCells();
+                func.paintScenario();          
 
                 // start gol button
                 $cache
                     .get('#btn-start-gol')
-                    .click(function () {
-                        console.log('START');
-                        // start();
+                    .click(function () {                        
+                        func.start();
                     });
-
-                /*
+                
                 // pause gol button
                 $cache
                     .get('#btn-pause-gol')
@@ -30,8 +28,7 @@ define([
                     .get('#btn-reset-gol')
                     .click(function () {
                         reset();
-                    });
-                */
+                    });                
             });
         });
     });

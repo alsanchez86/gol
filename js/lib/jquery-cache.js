@@ -1,6 +1,3 @@
-/*
-    jQuery DOM Cache
-*/
 define(['jquery'], function ($) {    
     var store = {},
         $cache = {
