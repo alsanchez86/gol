@@ -1,7 +1,7 @@
 define(function () {
-    var vars = {};
+    var v = {};
 
-    vars.cycle = {
+    v.cycle = {
         current: 0,
         limit: 0,
         time: 500,
@@ -9,13 +9,13 @@ define(function () {
         running: false
     };
 
-    vars.plateau = {
+    v.plateau = {
         rows: 60,
         columns: 60,
         cells: []
     };
 
-    vars.colindantesAxis = [{
+    v.colindantesAxis = [{
             id: 1,
             x: -1,
             y: -1
@@ -57,5 +57,5 @@ define(function () {
         }
     ];
 
-    return vars;
+    return v;
 });

@@ -2,28 +2,28 @@ define([
         'lib/jquery-cache',
         'lib/functions'
     ],
-    function ($cache, func) {
+    function ($cache, f) {
         $(function () {
             $(document).ready(function () {
-                func.setCells();
-                func.paintScenario();
+                f.setCells();
+                f.paintScenario();
 
                 $cache
                     .get('#btn-start-gol')
                     .click(function () {
-                        func.start();
+                        f.start();
                     });
 
                 $cache
                     .get('#btn-pause-gol')
                     .click(function () {
-                        func.pause();
+                        f.pause();
                     });
 
                 $cache
                     .get('#btn-reset-gol')
                     .click(function () {
-                        func.reset();
+                        f.reset();
                     });
             });
         });

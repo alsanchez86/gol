@@ -1,9 +1,9 @@
-define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, vars, _) {
-    var functions = {};
+define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, v, _) {
+    var f = {};
 
-    functions.setCells = function () {
-        for (i = 1; i <= vars.plateau.rows; i++) { // rows        
-            for (u = 1; u <= vars.plateau.columns; u++) { // columns    
+    f.setCells = function () {
+        for (i = 1; i <= v.plateau.rows; i++) { // rows        
+            for (u = 1; u <= v.plateau.columns; u++) { // columns    
                 var cell = {
                     id: u + "-" + i,
                     x: u,
@@ -12,23 +12,23 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
                     cycleStatus: false //dead
                 };
 
-                vars.plateau.cells.push(cell);
+                v.plateau.cells.push(cell);
             }
         }
     };
 
-    functions.paintScenario = function () {
+    f.paintScenario = function () {
         // plateau
         $cache
             .get('#plateau')
             .css({
-                height: vars.plateau.rows + "vw",
-                width: vars.plateau.columns + "vw"
+                height: v.plateau.rows + "vw",
+                width: v.plateau.columns + "vw"
             });
 
         // cells
         _.each(
-            vars.plateau.cells,
+            v.plateau.cells,
             function (cell) {
                 $('<div/>')
                     .attr({
@@ -39,12 +39,12 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
                         $cache.get('#plateau')
                     )
                     .click(function (event) {                       
-                        functions.cellClick(event);
+                        f.cellClick(event);
                     });
             });
     };
 
-    functions.paintCellStatus = function (status, id) {
+    f.paintCellStatus = function (status, id) {
         if (!status) {
             $cache
                 .get("#" + id)
@@ -57,64 +57,64 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
             .addClass('live');
     };
 
-    functions.cellClick = function (event) {
-        if (vars.cycle.running) {
+    f.cellClick = function (event) {
+        if (v.cycle.running) {
             return;
         }
 
         var id = event.currentTarget.id;
-        var cell = _.findWhere(vars.plateau.cells, {
+        var cell = _.findWhere(v.plateau.cells, {
             id: id
         });
 
         cell.status = !cell.status;
-        functions.paintCellStatus(cell.status, id);
+        f.paintCellStatus(cell.status, id);
     };
 
-    functions.initInterval = function () {
-        vars.cycle.interval = setInterval(function () {
-            var lives = functions.goOne();
+    f.initInterval = function () {
+        v.cycle.interval = setInterval(function () {
+            var lives = f.goOne();
 
-            if (lives.length === 0 || (!!vars.cycle.limit && (vars.cycle.current === vars.cycle.limit))) {
+            if (lives.length === 0 || (!!v.cycle.limit && (v.cycle.current === v.cycle.limit))) {
                 console.log('GAME OVER');
-                functions.reset();
+                f.reset();
                 return;
             }
 
-            vars.cycle.current++;
-            console.log("Cycle: " + vars.cycle.current);
+            v.cycle.current++;
+            console.log("Cycle: " + v.cycle.current);
 
-        }, vars.cycle.time);
+        }, v.cycle.time);
     };
 
-    functions.start = function () {
-        vars.cycle.running = true;
-        functions.startedUi();
-        functions.initInterval();
+    f.start = function () {
+        v.cycle.running = true;
+        f.startedUi();
+        f.initInterval();
     };
 
-    functions.pause = function () {
-        vars.cycle.running = false;
-        functions.startedUi();
-        clearInterval(vars.cycle.interval);
+    f.pause = function () {
+        v.cycle.running = false;
+        f.startedUi();
+        clearInterval(v.cycle.interval);
     };
 
-    functions.reset = function () {
-        vars.cycle.running = false;
-        vars.cycle.current = 0;
+    f.reset = function () {
+        v.cycle.running = false;
+        v.cycle.current = 0;
 
-        functions.startedUi();
-        clearInterval(vars.cycle.interval);
+        f.startedUi();
+        clearInterval(v.cycle.interval);
 
-        _.each(vars.plateau.cells, function (cell) {
+        _.each(v.plateau.cells, function (cell) {
             cell.cycleStatus = false;
             cell.status = false;
-            functions.paintCellStatus(cell.status, cell.id);
+            f.paintCellStatus(cell.status, cell.id);
         });
     };
 
-    functions.goOne = function () {
-        var lives = _.filter(vars.plateau.cells, function (cell) {
+    f.goOne = function () {
+        var lives = _.filter(v.plateau.cells, function (cell) {
             return cell.status;
         });
 
@@ -122,33 +122,33 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
             // determine cycleStatus by status
             _.each(lives, function (cell) {
                 // get colindantes
-                var colindantes = functions.getColindantes(cell);
+                var colindantes = f.getColindantes(cell);
 
                 // check current cell status
-                cell.cycleStatus = functions.checkCellStatus(cell, colindantes, 'status');
+                cell.cycleStatus = f.checkCellStatus(cell, colindantes, 'status');
 
                 // check deads colindantes for better performance
-                functions.checkDeadsColindantes(colindantes);
+                f.checkDeadsColindantes(colindantes);
             });
 
             // validate cycleStatus by cycleStatus
-            _.each(vars.plateau.cells, function (cell) {
+            _.each(v.plateau.cells, function (cell) {
                 if (cell.cycleStatus && cell.status != cell.cycleStatus) {
                     // get colindantes
-                    var colindantes = functions.getColindantes(cell);
+                    var colindantes = f.getColindantes(cell);
 
                     // check current cell status
-                    cell.cycleStatus = functions.checkCellStatus(cell, colindantes, 'cycleStatus');
+                    cell.cycleStatus = f.checkCellStatus(cell, colindantes, 'cycleStatus');
                 }
             });
 
-            functions.endOne();
+            f.endOne();
         }
 
         return lives;
     };
 
-    functions.checkDeadsColindantes = function (colindantes) {
+    f.checkDeadsColindantes = function (colindantes) {
         var colindante = {};
         var colindantesColindantes = [];
 
@@ -156,30 +156,30 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
             colindante = colindantes[i];
 
             if (!colindante.status) {
-                colindantesColindantes = functions.getColindantes(colindante);
-                colindante.cycleStatus = functions.checkCellStatus(colindante, colindantesColindantes, 'status');
+                colindantesColindantes = f.getColindantes(colindante);
+                colindante.cycleStatus = f.checkCellStatus(colindante, colindantesColindantes, 'status');
             }
         }
     };
 
-    functions.endOne = function () {
+    f.endOne = function () {
         _.each(
-            vars.plateau.cells,
+            v.plateau.cells,
             function (cell) {
                 cell.status = cell.cycleStatus;
-                functions.paintCellStatus(cell.status, cell.id);
+                f.paintCellStatus(cell.status, cell.id);
             }
         );
     };
 
-    functions.getColindantes = function (cell) {
+    f.getColindantes = function (cell) {
         var colindantes = [];
 
-        for (var i = 0; i < vars.colindantesAxis.length; i++) {
+        for (var i = 0; i < v.colindantesAxis.length; i++) {
             var colindante = _.findWhere(
-                vars.plateau.cells, {
-                    x: cell.x + vars.colindantesAxis[i].x,
-                    y: cell.y + vars.colindantesAxis[i].y
+                v.plateau.cells, {
+                    x: cell.x + v.colindantesAxis[i].x,
+                    y: cell.y + v.colindantesAxis[i].y
                 }
             );
 
@@ -191,8 +191,8 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
         return colindantes;
     };
 
-    functions.startedUi = function () {
-        if (vars.cycle.running) {
+    f.startedUi = function () {
+        if (v.cycle.running) {
             // plateau
             $cache
                 .get('#plateau')
@@ -227,16 +227,16 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
             .attr('disabled', true);
     };
 
-    functions.checkCellStatus = function (cell, colindantes, field) {
+    f.checkCellStatus = function (cell, colindantes, field) {
         /*    
             Cada celda con uno o ningún vecino          -> muere.
             Cada celda con 3 o más vecinos              -> muere.
             Cada celda con 2 o 3 vecinos                -> vive.        
         */
-        return field === 'status' ? functions.livesCells(cell, colindantes, field) === 3 : functions.livesCells(cell, colindantes, field) <= 3;
+        return field === 'status' ? f.livesCells(cell, colindantes, field) === 3 : f.livesCells(cell, colindantes, field) <= 3;
     };
 
-    functions.livesCells = function (cell, colindantes, field) {
+    f.livesCells = function (cell, colindantes, field) {
         var lives = [];
 
         _.each(
@@ -251,5 +251,5 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, va
         return lives.length;
     };
 
-    return functions;
+    return f;
 });
