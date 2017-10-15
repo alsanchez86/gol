@@ -1,4 +1,9 @@
-define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, v, _) {
+define([
+    '$cache',
+    'variables',
+    'underscore'
+], function ($cache, v, _) {
+
     var f = {};
 
     f.setCells = function () {
@@ -38,7 +43,7 @@ define(['lib/jquery-cache', 'lib/variables', 'underscore'], function ($cache, v,
                     .appendTo(
                         $cache.get('#plateau')
                     )
-                    .click(function (event) {                       
+                    .click(function (event) {
                         f.cellClick(event);
                     });
             });

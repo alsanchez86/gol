@@ -1,12 +1,16 @@
-var bowerPath   = '../bower_components/';
-var nodePath    = '../node_modules/';
+var bowerPath = '../bower_components/',
+    nodePath = '../node_modules/',
+    rconfig = {
+        baseUrl: 'js',
+        paths: {
+            jquery: bowerPath + 'jquery/dist/jquery.min',
+            tether: bowerPath + 'tether/dist/js/tether.min',
+            bootstrap: bowerPath + 'bootstrap/dist/js/bootstrap.min',
+            underscore: bowerPath + 'underscore/underscore-min',
+            $cache: 'lib/jquery-cache',
+            variables: 'lib/variables',
+            functions: 'lib/functions'
+        }
+    };
 
-requirejs.config({
-    baseUrl: 'js',
-    paths: {
-        jquery: bowerPath + 'jquery/dist/jquery.min',
-        tether: bowerPath + 'tether/dist/js/tether.min',
-        bootstrap: bowerPath + 'bootstrap/dist/js/bootstrap.min',
-        underscore: bowerPath + 'underscore/underscore-min'
-    }
-});
+requirejs.config(rconfig);

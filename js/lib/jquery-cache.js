@@ -1,4 +1,7 @@
-define(['jquery'], function ($) {    
+define([
+    'jquery'
+], function ($) {
+
     var store = {},
         $cache = {
             get: function (selector, force) {

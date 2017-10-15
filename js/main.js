@@ -1,13 +1,13 @@
 define([
-        'lib/jquery-cache',
-        'lib/functions'
+        'jquery'
     ],
-    function ($cache, f) {
-        $(function () {
-            $(document).ready(function () {
-                f.setCells();
-                f.paintScenario();
+    function ($) {
 
+        $(document).ready(function () {
+            require([
+                '$cache',
+                'functions'
+            ], function ($cache, f) {
                 $cache
                     .get('#btn-start-gol')
                     .click(function () {
@@ -25,6 +25,9 @@ define([
                     .click(function () {
                         f.reset();
                     });
+
+                f.setCells();
+                f.paintScenario();
             });
         });
     });
