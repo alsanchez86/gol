@@ -5,6 +5,7 @@ Game of life
 ### Install
 
 npm install
+
 bower install
 
 ### Compile SASS
