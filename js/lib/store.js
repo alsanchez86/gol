@@ -1,22 +1,17 @@
-define(function () {
-
-    var v = {};
-
-    v.cycle = {
+define({
+    cycle = {
         current: 0,
         limit: 0,
         time: 500,
         interval: null,
         running: false
-    };
-
-    v.plateau = {
+    },
+    plateau = {
         rows: 0,
         columns: 0,
         cells: []
-    };
-
-    v.colindantesAxis = [{
+    },
+    colindantesAxis = [{
             id: 1,
             x: -1,
             y: -1
@@ -56,7 +51,5 @@ define(function () {
             x: +1,
             y: +1
         }
-    ];
-
-    return v;
+    ]
 });

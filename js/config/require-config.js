@@ -8,7 +8,7 @@ var bowerPath = '../bower_components/',
             bootstrap: bowerPath + 'bootstrap/dist/js/bootstrap.min',
             underscore: bowerPath + 'underscore/underscore-min',
             $cache: 'lib/jquery-cache',
-            variables: 'lib/variables',
+            store: 'lib/store',
             functions: 'lib/functions'
         }
     };

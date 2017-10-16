@@ -1,18 +1,13 @@
-define([
-    'jquery'
-], function ($) {
-
-    var store = {},
-        $cache = {
-            get: function (selector, force) {
-                if (store[selector] !== undefined && force === undefined) {
-                    return store[selector];
-                }
-
-                store[selector] = $(selector);
-                return store[selector];
+define(['jquery'], function ($) {
+    return {
+        store: {},
+        get: function (selector, force) {
+            if (this.store[selector] !== undefined && force === undefined) {
+                return this.store[selector];
             }
-        };
 
-    return $cache;
+            this.store[selector] = $(selector);
+            return this.store[selector];
+        }
+    };
 });
