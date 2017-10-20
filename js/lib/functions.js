@@ -1,4 +1,14 @@
 define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
+    // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado
+    var paintCellStatus = function (status, id) {
+        if (!status) {
+            $cache.get("#" + id).removeClass('live');
+            return;
+        }
+        $cache.get("#" + id).addClass('live');
+    }
+
+    // No modificar las variables del store directamente desde funciones privadas
     return {
         setPlateau = function (rows, columns) {
             store.plateau.rows = rows;
@@ -42,14 +52,6 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
                             cellClick(event);
                         });
                 });
-        },
-        paintCellStatus = function (status, id) {
-            if (!status) {
-                $cache.get("#" + id).removeClass('live');
-                return;
-            }
-
-            $cache.get("#" + id).addClass('live');
         },
         cellClick = function (event) {
             if (store.cycle.running) {

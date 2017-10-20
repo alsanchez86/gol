@@ -1,7 +1,11 @@
-var bowerPath = '../bower_components/',
-    nodePath = '../node_modules/',
-    lib = 'lib/',
-    rconfig = {
+(function () {
+    'use strict';
+
+    var lib = 'lib/';
+    var bowerPath = '../bower_components/';
+    var nodePath = '../node_modules/';
+
+    return {
         baseUrl: 'js',
         paths: {
             jquery: bowerPath + 'jquery/dist/jquery.min',
@@ -11,7 +15,20 @@ var bowerPath = '../bower_components/',
             $cache: lib + 'jquery-cache',
             store: lib + 'store',
             functions: lib + 'functions'
+        },
+        shim: {
+            tether: {
+                deps: ['jquery']
+            },
+            bootstrap: {
+                deps: ['jquery', 'tether']
+            },
+            $cache: {
+                deps: ['jquery']
+            },            
+            functions: {
+                deps: ['$cache', 'store', 'underscore']
+            },
         }
     };
-
-requirejs.config(rconfig);
+});

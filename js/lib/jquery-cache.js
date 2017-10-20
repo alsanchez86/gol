@@ -1,13 +1,14 @@
 define(['jquery'], function ($) {
-    return {
-        store: {},
+    var store = {};
+
+    return {        
         get: function (selector, force) {
-            if (this.store[selector] !== undefined && force === undefined) {
-                return this.store[selector];
+            if (store[selector] !== undefined && force === undefined) {
+                return store[selector];
             }
 
-            this.store[selector] = $(selector);
-            return this.store[selector];
+            store[selector] = $(selector);
+            return store[selector];
         }
     };
 });
