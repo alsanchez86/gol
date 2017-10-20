@@ -1,5 +1,6 @@
 var bowerPath = '../bower_components/',
     nodePath = '../node_modules/',
+    lib = 'lib/',
     rconfig = {
         baseUrl: 'js',
         paths: {
@@ -7,9 +8,9 @@ var bowerPath = '../bower_components/',
             tether: bowerPath + 'tether/dist/js/tether.min',
             bootstrap: bowerPath + 'bootstrap/dist/js/bootstrap.min',
             underscore: bowerPath + 'underscore/underscore-min',
-            $cache: 'lib/jquery-cache',
-            store: 'lib/store',
-            functions: 'lib/functions'
+            $cache: lib + 'jquery-cache',
+            store: lib + 'store',
+            functions: lib + 'functions'
         }
     };
 

@@ -5,17 +5,17 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
             store.plateau.columns = columns;
         },
         setCells = function () {
-            for (i = 1; i <= store.plateau.rows; i++) { // rows        
-                for (u = 1; u <= store.plateau.columns; u++) { // columns    
-                    var cell = {
+            // rows
+            for (i = 1; i <= store.plateau.rows; i++) {
+                // columns 
+                for (u = 1; u <= store.plateau.columns; u++) {
+                    store.plateau.cells.push({
                         id: u + "-" + i,
                         x: u,
                         y: i,
-                        status: false, //dead
-                        cycleStatus: false //dead
-                    };
-
-                    store.plateau.cells.push(cell);
+                        status: false,
+                        cycleStatus: false
+                    });
                 }
             }
         },
@@ -31,7 +31,9 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
                 store.plateau.cells,
                 function (cell) {
                     $('<div/>')
-                        .attr({id: cell.id})
+                        .attr({
+                            id: cell.id
+                        })
                         .addClass('plateau-cell')
                         .appendTo(
                             $cache.get('#plateau')
@@ -175,9 +177,9 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
             return colindantes;
         },
         startedUi = function () {
-            if (store.cycle.running) {                
-                $cache.get('#plateau').attr('disabled', true);                
-                $cache.get('#btn-start-gol').attr('disabled', true);                
+            if (store.cycle.running) {
+                $cache.get('#plateau').attr('disabled', true);
+                $cache.get('#btn-start-gol').attr('disabled', true);
                 $cache.get('#btn-pause-gol').removeAttr('disabled');
                 return;
             }
