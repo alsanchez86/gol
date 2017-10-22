@@ -15,6 +15,9 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 
 ### Roadmap
 
+- Memoria de celdas ya checkeadas en cada iteración, para no chequearla más de una vez
+- Limitar número de celdas al crear la cuadrícula
 - Update CANVAS
 - Checking for not valid cell's status
 - Implement RsJx
+- Implement webpack (en otra rama)

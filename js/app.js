@@ -1,11 +1,13 @@
-require(['config/require-config'], function (rc) {
-    require.config(rc.config);
+'use strict';
 
-    require(['jquery', 'tether'], function (Tether) {
-        window.Tether = Tether;
+require(['config/require-config'], function () {   
+    console.log("Loaded config file.");
+
+    require(['jquery', 'tether'], function ($, Tether) {
+        window.Tether = Tether; // hack for bootstrap               
         
         require(['bootstrap', 'main'], function (){
             console.log("Loaded main module.");
-        });
+        });        
     });
 });

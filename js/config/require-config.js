@@ -1,9 +1,12 @@
-(function () {
-    'use strict';
+// https://toddmotto.com/mastering-the-module-pattern/#creating-a-module
 
+var rconfig = function () {
     var lib = 'lib/';
     var bowerPath = '../bower_components/';
     var nodePath = '../node_modules/';
+    var callback = function () {
+        console.log("Init config file.");
+    };
 
     return {
         baseUrl: 'js',
@@ -25,10 +28,13 @@
             },
             $cache: {
                 deps: ['jquery']
-            },            
+            },
             functions: {
                 deps: ['$cache', 'store', 'underscore']
             },
-        }
+        },
+        callback: callback
     };
-});
+}();
+
+requirejs.config(rconfig);
