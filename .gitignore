@@ -2,11 +2,13 @@
 *.log
 .DS_Store
 package-lock.json
+_SpecRunner.html
 
 # FOLDERS
 .tmp
 .sass-cache
 .vscode
+.grunt
 
 node_modules
 bower_components
