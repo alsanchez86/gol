@@ -1,23 +1,25 @@
 // https://toddmotto.com/mastering-the-module-pattern/#creating-a-module
 
-var rconfig = function () {
-    var lib = 'lib/';
-    var bowerPath = '../bower_components/';
-    var nodePath = '../node_modules/';
-    var callback = function () {
+var rconfig = (function () {
+    // private properties and methods
+    var _lib = 'lib/';
+    var _bowerPath = '../bower_components/';
+    var _nodePath = '../node_modules/';
+    var _callback = function () {
         console.log("Init config file.");
     };
 
+    // object
     return {
         baseUrl: 'js',
         paths: {
-            jquery: bowerPath + 'jquery/dist/jquery.min',
-            tether: bowerPath + 'tether/dist/js/tether.min',
-            bootstrap: bowerPath + 'bootstrap/dist/js/bootstrap.min',
-            underscore: bowerPath + 'underscore/underscore-min',
-            $cache: lib + 'jquery-cache',
-            store: lib + 'store',
-            functions: lib + 'functions'
+            jquery: _bowerPath + 'jquery/dist/jquery.min',
+            tether: _bowerPath + 'tether/dist/js/tether.min',
+            bootstrap: _bowerPath + 'bootstrap/dist/js/bootstrap.min',
+            underscore: _bowerPath + 'underscore/underscore-min',
+            $cache: _lib + 'jquery-cache',
+            store: _lib + 'store',
+            functions: _lib + 'functions'
         },
         shim: {
             tether: {
@@ -33,8 +35,9 @@ var rconfig = function () {
                 deps: ['$cache', 'store', 'underscore']
             },
         },
-        callback: callback
+        callback: _callback
     };
-}();
+})();
 
+// load rconfig object to requirejs
 requirejs.config(rconfig);
