@@ -11,14 +11,15 @@
   "bower_components": "./bower_components/",
   "dist": "./dist/",
   "devDependencies": {
-    "grunt": "*",
+    "grunt": "^1.0.1",
     "grunt-contrib-jasmine": "^1.1.0",
-    "grunt-template-jasmine-requirejs": "^0.2.3",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.9.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-template-jasmine-requirejs": "*",
+    "gulp": "*",
+    "gulp-clean-css": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
     "requirejs": "*",
-    "run-sequence": "^2.2.0"
+    "run-sequence": "*"
   }
 }
