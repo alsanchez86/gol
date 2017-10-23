@@ -6,6 +6,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 
 ### Install
 
+- git clone https://github.com/alsanchez86/gol.git
 - npm install
 - bower install
 
@@ -20,4 +21,5 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Update CANVAS
 - Checking for not valid cell's status
 - Implement RsJx
-- Implement webpack (en otra rama)
+- Implement Jasmine tests
+- Implement webpack (in another branch)
