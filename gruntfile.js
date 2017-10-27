@@ -10,31 +10,28 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         jasmine: {
-            src: 'js/**/*.js',
-            options: {
-                specs: 'specs/**/*.spec.js',
-                // template: require('grunt-template-jasmine-requirejs'),
-                // templateOptions: {
-                //     requireConfigFile: 'js/config/require-config.js'
-                // }
+            customTemplate: {
+                src: [],
+                options: {
+                    vendor: [],
+                    keepRunner: true,
+                    // helpers: globalHeadless,
+                    template: require('grunt-template-jasmine-requirejs'),
+                    templateOptions: {
+                        requireConfigFile: 'js/config/require-config.js',
+                        // requireConfig: reqConfig
+                    },
+                    specs: 'specs/**/*.spec.js'                    
+                }
             }
-        },
-        jshint: {
-            all: [
-                'gruntfile.js',
-                'specs/**/*.spec.js'
-            ],
-            options: {
-                jshintrc: '.jshintrc'
-            }
-        }
+        }        
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    // load tasks
+    grunt.loadNpmTasks('grunt-contrib-jasmine');    
 
     // register tasks
-    grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.registerTask('test', ['jasmine']);
 
     // default task
     grunt.registerTask("default", ["test"]);

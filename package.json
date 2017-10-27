@@ -11,10 +11,9 @@
   "bower_components": "./bower_components/",
   "dist": "./dist/",
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-jasmine": "^1.1.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-template-jasmine-requirejs": "*",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jasmine": "~0.8.2",    
+    "grunt-template-jasmine-requirejs": "~0.2.0",
     "gulp": "*",
     "gulp-clean-css": "*",
     "gulp-rename": "*",
