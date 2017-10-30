@@ -1,6 +1,10 @@
 define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
-    // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado
-    var paintCellStatus = function (status, id) {
+    // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
+    var functions = {};
+
+    store.get('cycle');
+
+    functions.paintCellStatus = function (status, id) {
         if (!status) {
             $cache.get("#" + id).removeClass('live');
             return;
@@ -9,6 +13,7 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
     }
 
     // No modificar las variables del store directamente desde funciones privadas
+    /*
     return {
         setPlateau = function (rows, columns) {
             store.plateau.rows = rows;
@@ -190,12 +195,11 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
             $cache.get('#btn-start-gol').removeAttr('disabled');
             $cache.get('#btn-pause-gol').attr('disabled', true);
         },
-        checkCellStatus = function (cell, colindantes, field) {
-            /*    
-                Cada celda con uno o ningún vecino          -> muere.
-                Cada celda con 3 o más vecinos              -> muere.
-                Cada celda con 2 o 3 vecinos                -> vive.        
-            */
+        checkCellStatus = function (cell, colindantes, field) {                
+            // Cada celda con uno o ningún vecino          -> muere.
+            // Cada celda con 3 o más vecinos              -> muere.
+            // Cada celda con 2 o 3 vecinos                -> vive.        
+            
             return field === 'status' ? livesCells(cell, colindantes, field) === 3 : livesCells(cell, colindantes, field) <= 3;
         },
         livesCells = function (cell, colindantes, field) {
@@ -213,4 +217,5 @@ define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
             return lives.length;
         }
     };
+    */
 });

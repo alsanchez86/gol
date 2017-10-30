@@ -6,12 +6,16 @@
 .btn {
     @include text ($roboto, 0.8rem, 400, normal, $primary-text-color, center, capitalize, 100%);    
     padding: 0.6rem 1rem;
-    cursor: pointer;        
+    cursor: pointer;      
+    
+    &[disabled]{
+      opacity: .3;
+    }
 }
 
 // disabled
 .disabled {
-  pointer-events: none;  	
+  pointer-events: none;
 }
 
 // selectors

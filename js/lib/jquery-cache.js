@@ -1,14 +1,15 @@
 define(['jquery'], function ($) {
-    var store = {};
+    // cache read only
+    var cache = {};
 
-    return {        
-        get: function (selector, force) {
-            if (store[selector] !== undefined && force === undefined) {
-                return store[selector];
-            }
-
-            store[selector] = $(selector);
-            return store[selector];
+    cache.get = function (selector, force) {
+        if (cache[selector] !== undefined && force === undefined) {
+            return cache[selector];
         }
-    };
+
+        cache[selector] = $(selector);
+        return cache[selector];
+    }
+
+    return cache;
 });

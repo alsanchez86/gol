@@ -1,3 +1,4 @@
+/*
 define(['require', 'jquery'], function (require, $) {
     $(function () { // jquery document ready        
         require(['$cache', 'functions'], function ($cache, f) {
@@ -25,3 +26,4 @@ define(['require', 'jquery'], function (require, $) {
         });
     });
 });
+*/
