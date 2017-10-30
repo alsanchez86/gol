@@ -57,12 +57,30 @@ define(function () {
     };
 
     store.set = function (property, value) {
-        private[property] = value;
+        debugger;
+
+        var split = property.split('.');
+
+        var prop = '';
+
+
+        // for (var i = 0; split.length > i; i++){
+        //     prop = 
+        // }
+
+        private[split] = value;
     }
 
     store.get = function (property) {
+        /*
+        if (!property){
+            return private;
+        }
+        */        
+
+
         return private[property];
     }
-    
+
     return store;
 });

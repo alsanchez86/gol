@@ -1,8 +1,8 @@
 define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
     // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
     var functions = {};
-
-    store.get('cycle');
+    
+    store.set('cycle.current', 3);    
 
     functions.paintCellStatus = function (status, id) {
         if (!status) {
