@@ -1,6 +1,6 @@
 define(function () {
-    var store = {};
-    var private = {
+    var store = {};    
+    var _this = {
         cycle: {
             current: 0,
             limit: 0,
@@ -56,19 +56,15 @@ define(function () {
         ]
     };
 
-    store.set = function (property, value) {
-        debugger;
-
+    store.set = function (property, value) {       
         var split = property.split('.');
-
         var prop = '';
-
-
+        
         // for (var i = 0; split.length > i; i++){
         //     prop = 
         // }
 
-        private[split] = value;
+        _this[split] = value;
     }
 
     store.get = function (property) {
@@ -78,8 +74,7 @@ define(function () {
         }
         */        
 
-
-        return private[property];
+        return _this[property];
     }
 
     return store;

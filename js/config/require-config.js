@@ -1,25 +1,23 @@
-// https://toddmotto.com/mastering-the-module-pattern/#creating-a-module
-
-var rconfig = (function () {
-    // private properties and methods
-    var _lib = 'lib/';
-    var _bowerPath = '../bower_components/';
-    var _nodePath = '../node_modules/';
-    var _callback = function () {
-        console.log("Init config file.");
+var rconfig = (function () {    
+    var _this = {
+        lib: 'lib/',
+        bowerPath: '../bower_components/',
+        nodePath: '../node_modules/',
+        callback = function () {
+            console.log("Init config file.");
+        }
     };
-
-    // object
+    
     return {
         baseUrl: 'js',
         paths: {
-            jquery: _bowerPath + 'jquery/dist/jquery.min',
-            tether: _bowerPath + 'tether/dist/js/tether.min',
-            bootstrap: _bowerPath + 'bootstrap/dist/js/bootstrap.min',
-            underscore: _bowerPath + 'underscore/underscore-min',
-            $cache: _lib + 'jquery-cache',
-            store: _lib + 'store',
-            functions: _lib + 'functions'
+            jquery: _this.bowerPath + 'jquery/dist/jquery.min',
+            tether: _this.bowerPath + 'tether/dist/js/tether.min',
+            bootstrap: _this.bowerPath + 'bootstrap/dist/js/bootstrap.min',
+            underscore: _this.bowerPath + 'underscore/underscore-min',
+            $cache: _this.lib + 'jquery-cache',
+            store: _this.lib + 'store',
+            functions: _this.lib + 'functions'
         },
         shim: {
             tether: {
@@ -32,10 +30,10 @@ var rconfig = (function () {
                 deps: ['jquery']
             },
             functions: {
-                deps: ['$cache', 'store', 'underscore']
+                deps: ['$cache', 'store', 'underscore', 'log']
             },
         },
-        callback: _callback
+        callback: _this.callback
     };
 })();
 

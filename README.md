@@ -23,3 +23,8 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Implement RsJx
 - Implement Jasmine tests
 - Implement webpack (in another branch)
+
+### Helpers
+
+- Module pattern: https://toddmotto.com/mastering-the-module-pattern/#creating-a-module
+- RequireJS: http://requirejs.org/docs/api.html
