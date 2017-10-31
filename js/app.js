@@ -30,7 +30,8 @@ require(['config/require-config'], function () {
                             return;
                         }
 
-                        // cada método se debe ejecutar dentro de un callback del anterior
+                        // Cada método se debe ejecutar dentro de un callback del anterior
+                        // Podemos hacer que la función devuelva una promesa (.then) de forma que podramos ejecutar código cuando esta se cumpla
                         f.setPlateau(rows, columns);
                         f.setCells();
                         f.paintScenario();
