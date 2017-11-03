@@ -23,6 +23,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Implement RsJx
 - Implement Jasmine tests
 - Implement webpack (in another branch)
+- New branch Typescript
 
 ### Helpers
 
