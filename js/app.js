@@ -1,14 +1,14 @@
 'use strict';
 
-require(['config/require-config'], function () {
-    console.log("Loaded config file.");
+require(['config/require-config'], function () {    
+    log.message('general.load_config');
 
     require(['jquery', 'tether'], function ($, Tether) {
         window.Tether = Tether; // hack for bootstrap               
 
         require(['bootstrap'], function () {
             $(function () { // jquery document ready        
-                require(['$cache', 'functions'], function ($cache, f) {
+                require(['$cache', 'functions', 'log'], function ($cache, f, log) {
                     $cache.get('#btn-start-gol').click(function () {
                         f.start();
                     });
@@ -32,9 +32,9 @@ require(['config/require-config'], function () {
 
                         // Cada método se debe ejecutar dentro de un callback del anterior
                         // Podemos hacer que la función devuelva una promesa (.then) de forma que podramos ejecutar código cuando esta se cumpla
-                        f.setPlateau(rows, columns);
-                        f.setCells();
-                        f.paintScenario();
+                        // f.setPlateau(rows, columns);
+                        // f.setCells();
+                        // f.paintScenario();
                     });
                 });
             });

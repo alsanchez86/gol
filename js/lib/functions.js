@@ -1,4 +1,4 @@
-define(['$cache', 'store', 'underscore'], function ($cache, store, _) {
+define(['$cache', 'store', 'underscore', 'log'], function ($cache, store, _, log) {
     // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
     var functions = {};
     
