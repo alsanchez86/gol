@@ -20,6 +20,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Limitar número de celdas al crear la cuadrícula
 - Update CANVAS
 - Checking for not valid cell's status
+- Save plateau status in localstorage for load
 - Implement RsJx
 - Implement Jasmine tests
 - Implement webpack (in another branch)

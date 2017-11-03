@@ -8,7 +8,8 @@ require(['config/require-config'], function (rconfig) {
         window.Tether = Tether; // hack for bootstrap               
 
         require(['bootstrap'], function () {
-            $(function () { // jquery document ready        
+            // jquery document ready
+            $(function () { 
                 require(['$cache', 'functions', 'log'], function ($cache, f, log) {
                     $cache.get('#btn-start-gol').click(function () {
                         f.start();
