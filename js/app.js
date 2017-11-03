@@ -1,6 +1,7 @@
 'use strict';
 
-require(['config/require-config'], function () {    
+require(['config/require-config'], function (rconfig) {
+    require.config(rconfig);
     log.message('general.load_config');
 
     require(['jquery', 'tether'], function ($, Tether) {
