@@ -1,6 +1,6 @@
 'use strict';
 
-require(['require-config'], function (){
+require(['require-config'], function () {
     require(['jquery', 'tether'], function ($, Tether) {
         window.Tether = Tether; // hack for bootstrap               
 
@@ -8,6 +8,8 @@ require(['require-config'], function (){
             // jquery document ready
             $(function () {
                 require(['$cache', 'functions', 'log'], function ($cache, f, log) {
+                    console.log(f);
+
                     $cache.get('#btn-start-gol').click(function () {
                         f.start();
                     });
@@ -25,8 +27,7 @@ require(['require-config'], function (){
                             columns = parseInt($cache.get('#form-columns').val());
 
                         if (f.checkPlateauMax(rows, columns)) {
-                            log.message('general.max_plateau');
-                            return;
+                            return log.message('general.max_plateau');
                         }
 
                         // Cada método se debe ejecutar dentro de un callback del anterior

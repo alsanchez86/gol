@@ -1,8 +1,7 @@
 define(['$cache', 'store', 'underscore', 'log'], function ($cache, store, _, log) {
     // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
-    var functions = {};
-    
-    store.set('cycle.current', 3);    
+    var functions = {},
+        _this = {};
 
     functions.paintCellStatus = function (status, id) {
         if (!status) {
@@ -11,6 +10,13 @@ define(['$cache', 'store', 'underscore', 'log'], function ($cache, store, _, log
         }
         $cache.get("#" + id).addClass('live');
     }
+
+    functions.checkPlateauMax = function () {
+        store.set('cycle.current', 3);
+        log.message(store.get('cycle.current'));
+    }
+
+    return functions;
 
     // No modificar las variables del store directamente desde funciones privadas
     /*
