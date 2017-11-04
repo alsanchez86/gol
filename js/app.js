@@ -1,15 +1,12 @@
 'use strict';
 
-require(['config/require-config'], function (rconfig) {
-    require.config(rconfig);
-    log.message('general.load_config');
-
+require(['require-config'], function (){
     require(['jquery', 'tether'], function ($, Tether) {
         window.Tether = Tether; // hack for bootstrap               
 
         require(['bootstrap'], function () {
             // jquery document ready
-            $(function () { 
+            $(function () {
                 require(['$cache', 'functions', 'log'], function ($cache, f, log) {
                     $cache.get('#btn-start-gol').click(function () {
                         f.start();
