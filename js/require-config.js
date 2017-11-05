@@ -20,6 +20,7 @@ require.config(
                 $cache: _this.lib + 'jquery-cache',
                 store: _this.lib + 'store',
                 functions: _this.lib + 'functions',
+                helpers: _this.lib + 'helpers',
                 log: _this.lib + 'log',
                 app: 'app',
             },
@@ -33,11 +34,17 @@ require.config(
                 $cache: {
                     deps: ['jquery']
                 },
+                helpers: {
+                    deps: ['underscore']
+                },
                 store: {
-                    deps: ['log']
+                    deps: ['log', 'helpers']
                 },
                 functions: {
                     deps: ['$cache', 'store', 'underscore', 'log']
+                },
+                log: {
+                    deps: ['helpers', 'underscore']
                 },
                 app: {
                     deps: ['jquery', 'tether', 'bootstrap', '$cache', 'functions', 'log']

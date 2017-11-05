@@ -1,4 +1,4 @@
-define(['log'], function (log) {
+define(['log', 'helpers'], function (log, helpers) {
     var store = {},
         _this = {
             cycle: {
@@ -56,33 +56,18 @@ define(['log'], function (log) {
             ]
         };
 
-    store.set = function (property, value) {
-        console.log(this);
+    store.set = function (key, value) {        
+        // si ya existe la propiedad en el store, actualizarla
+        // si no existe la propiedad en el store, crearla
     }
 
     store.get = function (key) {
-        if (!key) {
-            log.write("store.select_property");
-            return;
-        }
+        var value = helpers.getPropertyValue(_this, key);
 
-        var splited,
-            candidate,
-            _store;
-
-        _store = _this;
-        splited = key.split('.');
-
-        for (var i = 0; i < splited.length - 1; i++) {
-            candidate = _store[splited[i]];
-
-            if (!candidate) {
-                log.write("store.has_property", key);
-                return;
-            }
-            _store = candidate;
-        }
-        return _store[splited[i]];
+        if (typeof value === "undefined"){
+            log.write("store.errors.hasnt_property", key);            
+        }           
+        return value;
     }
 
     return store;

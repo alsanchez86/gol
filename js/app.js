@@ -25,7 +25,7 @@ require(['require-config'], function () {
                             columns = parseInt($cache.get('#form-columns').val());
 
                         if (f.checkPlateauMax(rows, columns)) {
-                            return log.write('plateau.max_plateau');
+                            // return log.write('plateau.max_plateau');
                         }
 
                         // Cada método se debe ejecutar dentro de un callback del anterior

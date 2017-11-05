@@ -11,10 +11,9 @@ define(['$cache', 'store', 'underscore', 'log'], function ($cache, store, _, log
         $cache.get("#" + id).addClass('live');
     }
 
-    functions.checkPlateauMax = function () {
-        debugger;
-        store.set('cycle.current', 3);
-        log.write(store.get('cycle.current'));
+    functions.checkPlateauMax = function () {        
+        // store.set('cycle.current', 3);
+        store.get('cycle.current');
     }
 
     return functions;

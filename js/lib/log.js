@@ -1,7 +1,7 @@
 // tomar mensajes de un JSON externo ¿cargado con requireJS, plugin?
 // Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 
-define(function () {
+define(['helpers', 'underscore'], function (helpers, _) {
     var log = {};
     var _messages = {
         general: {
@@ -11,45 +11,27 @@ define(function () {
             max_plateau: 'Se ha sobrepasado el máximo de celdas permitidas.',
         },
         store: {
-            has_property: "Dont exist property {} in the store.",
-            select_property: "Select a property from the store"
+            select_property: "Select a property from the store.",
+            errors: {
+                hasnt_property: "Error: Property {} dont exists in the store.",
+            }          
         }
     }
 
-    log.write = function (key) {
+    log.write = function (key, aux) {
         var message = this.get(key);
 
-        if (message) {
-            if (message.indexOf("{}") !== -1) {
-                message.replace("{}", key);
+        if (message && _.isString(message)) {
+            if (message.indexOf("{}") !== -1 && !_.isUndefined(aux)) {
+                message = message.replace("{}", aux);
             }
             key = message;
         }
-
         console.log(key);
     }
 
     log.get = function (key) {
-        if (!key) {
-            return;
-        }
-
-        var splited,
-            candidate,
-            messages;
-
-        messages = _messages;
-        splited = key.split('.');
-
-        for (var i = 0; i < splited.length - 1; i++) {
-            candidate = messages[splited[i]];
-
-            if (!candidate) {
-                return;
-            }
-            messages = candidate;
-        }
-        return messages[splited[i]];
+        return helpers.getPropertyValue(_messages, key);
     }
 
     return log;
