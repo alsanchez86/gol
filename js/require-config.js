@@ -33,6 +33,9 @@ require.config(
                 $cache: {
                     deps: ['jquery']
                 },
+                store: {
+                    deps: ['log']
+                },
                 functions: {
                     deps: ['$cache', 'store', 'underscore', 'log']
                 },
