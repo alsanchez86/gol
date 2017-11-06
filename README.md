@@ -25,6 +25,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Implement Jasmine tests
 - Implement webpack (in another branch)
 - New branch Typescript
+- Ver distintas posibilidades con d3: https://d3js.org/
 
 ### Helpers
 
