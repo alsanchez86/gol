@@ -56,9 +56,20 @@ define(['log', 'helpers'], function (log, helpers) {
             ]
         };
 
+    // si ya existe la propiedad en el store, actualizarla
+    // si no existe la propiedad en el store, crearla
     store.set = function (key, value) {        
-        // si ya existe la propiedad en el store, actualizarla
-        // si no existe la propiedad en el store, crearla
+        if (!key || !_.isString(key)) {
+            return;
+        }
+
+        var parts = key.split('.');
+
+        for (var i = 0; i < parts.length; i++) {            
+            if (i == (parts.length - 1)){
+                _this[parts[i]] = value;
+            }
+        }
     }
 
     store.get = function (key) {

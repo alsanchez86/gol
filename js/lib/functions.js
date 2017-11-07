@@ -13,6 +13,7 @@ define(['$cache', 'store', 'underscore', 'log'], function ($cache, store, _, log
 
     functions.checkPlateauMax = function () {        
         // store.set('cycle.current', 3);
+        store.set('cycle.current', 4);
         store.get('cycle.current');
     }
 
