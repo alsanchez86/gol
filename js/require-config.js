@@ -16,7 +16,7 @@ require.config(
                 jquery: _this.bowerPath + 'jquery/dist/jquery.min',
                 tether: _this.bowerPath + 'tether/dist/js/tether.min',
                 bootstrap: _this.bowerPath + 'bootstrap/dist/js/bootstrap.min',
-                underscore: _this.bowerPath + 'underscore/underscore-min',
+                lodash: _this.bowerPath + 'lodash/dist/lodash.min',
                 $cache: _this.lib + 'jquery-cache',
                 store: _this.lib + 'store',
                 functions: _this.lib + 'functions',
@@ -35,16 +35,16 @@ require.config(
                     deps: ['jquery']
                 },
                 helpers: {
-                    deps: ['underscore']
+                    deps: ['lodash']
                 },
                 store: {
                     deps: ['log', 'helpers']
                 },
                 functions: {
-                    deps: ['$cache', 'store', 'underscore', 'log']
+                    deps: ['$cache', 'store', 'lodash', 'log']
                 },
                 log: {
-                    deps: ['helpers', 'underscore']
+                    deps: ['helpers', 'lodash']
                 },
                 app: {
                     deps: ['jquery', 'tether', 'bootstrap', '$cache', 'functions', 'log']

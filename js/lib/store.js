@@ -1,4 +1,4 @@
-define(['log', 'helpers'], function (log, helpers) {
+define(['log', 'loadash'], function (log, _) {
     var store = {},
         _this = {
             cycle: {
@@ -59,26 +59,11 @@ define(['log', 'helpers'], function (log, helpers) {
     // si ya existe la propiedad en el store, actualizarla
     // si no existe la propiedad en el store, crearla
     store.set = function (key, value) {        
-        if (!key || !_.isString(key)) {
-            return;
-        }
-
-        var parts = key.split('.');
-
-        for (var i = 0; i < parts.length; i++) {            
-            if (i == (parts.length - 1)){
-                _this[parts[i]] = value;
-            }
-        }
+        _.set(_this, key, value);
     }
 
     store.get = function (key) {
-        var value = helpers.getPropertyValue(_this, key);
-
-        if (typeof value === "undefined"){
-            log.write("store.errors.hasnt_property", key);            
-        }           
-        return value;
+        _.get(_this, key);
     }
 
     return store;

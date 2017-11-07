@@ -1,7 +1,7 @@
 // tomar mensajes de un JSON externo ¿cargado con requireJS, plugin?
 // Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 
-define(['helpers', 'underscore'], function (helpers, _) {
+define(['helpers', 'lodash'], function (helpers, _) {
     var log = {};
     var _messages = {
         general: {
