@@ -59,4 +59,4 @@ gulp.task('prod', [], function (done) {
     });
 });
 
-gulp.task('default', ["prod"]);
+gulp.task('default', ["dev"]);
