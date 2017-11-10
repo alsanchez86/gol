@@ -26,6 +26,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Implement webpack (in another branch)
 - New branch Typescript
 - Ver distintas posibilidades con d3: https://d3js.org/
+- Implementar patrón observable para tracking de usuario (http://www.dofactory.com/javascript/observer-design-pattern)
 
 ### Helpers
 
