@@ -1,22 +1,32 @@
 // tomar mensajes de un JSON externo ¿cargado con requireJS, plugin?
 // Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 
-define(['json!es', 'lodash'], function (es, _) {
-    var log = {};    
+define(['json!es', 'lodash', '$cache'], function (es, _, $c) {
+    var log = {};
 
-    log.write = function (key, aux) {
-        var message = this.get(key);
+    /*
+        @param key: String (JSON nomenclature)
+        @param array: Array
+        @return void
+    */
+    log.write = function (key, array) {
+        var message = this.getFromJson(key),
+            type = "";
 
         if (message && _.isString(message)) {
-            if (message.indexOf("{}") !== -1 && !_.isUndefined(aux)) {
-                message = message.replace("{}", aux);
+            if (message.indexOf("{}") !== -1 && !_.isUndefined(array) && _.isArray(array)) {
+                _.forEach(array, function (value) {
+                    message = message.replace("{}", value);
+                });
             }
             key = message;
         }
         console.log(key);
+
+        $c.get('#console-output').html("<p class=" + type + "><i class=\"fa fa-info-circle\" aria-hidden=\"true\"></i>&nbsp;" + key + "</p>" + $c.get('#console-output').html());
     }
 
-    log.get = function (key) {
+    log.getFromJson = function (key) {
         return _.get(es, key);
     }
 

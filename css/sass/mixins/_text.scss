@@ -1,23 +1,12 @@
-@mixin text (
-    $font-family: 	  $font-family-base,
-    $font-size: 		  $font-size-base,
-    $font-weight: 	  $font-weight-base,
-    $font-style: 		  normal,
-    $color: 				  $black,
-    $text-align: 		  left,
-    $text-transform:  none,
-    $line-height: 	  $line-height-base
-	){
-
-	font-family: 	  $font-family;
-	font-size: 		  $font-size;
-	font-weight: 	  $font-weight;
-	font-style: 	  $font-style;
-	color: 			    $color;
-	text-align: 	  $text-align;
-	text-transform: $text-transform;
-	line-height: 	  $line-height;
-
+@mixin text ($font-family : $font-family-base, $font-size : $font-size-base, $font-weight : $font-weight-base, $font-style : normal, $color : $black, $text-align : left, $text-transform : none, $line-height : $line-height-base) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  font-style: $font-style;
+  color: $color;
+  text-align: $text-align;
+  text-transform: $text-transform;
+  line-height: $line-height;
   small {
     font-size: $small-font-size;
   }

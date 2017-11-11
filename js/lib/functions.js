@@ -1,42 +1,40 @@
-define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $cache, store, _, log) {
+define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c, store, _, log) {
     // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
     var functions = {},
         _this = {};
 
-    _this.exceedPlateauLimits = function (rows, columns) {
+    functions.exceedPlateauLimits = function (rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
         var mins = rows >= config.plateau.rows.min && columns >= config.plateau.columns.min,
             maxs = rows <= config.plateau.rows.max && columns <= config.plateau.columns.max;
 
-        return mins && maxs;
+        return !(mins && maxs);
     }
 
     functions.paintCellStatus = function (status, id) {
         if (!status) {
-            $cache.get("#" + id).removeClass('live');
+            $c.get("#" + id).removeClass('live');
             return;
         }
-        $cache.get("#" + id).addClass('live');
+        $c.get("#" + id).addClass('live');
     }    
 
     functions.setPlateauDimensions = function (rows, columns) {
         rows = _.toInteger(rows);
-        columns = _.toInteger(columns);
-
-        if (!_this.exceedPlateauLimits(rows, columns)) {
-            log.write('plateau.max_plateau');
-            return;
-        }       
+        columns = _.toInteger(columns);    
 
         store.set('plateau.rows', rows);
-        store.set('plateau.columns', columns); 
-        
-        // return promise;
+        store.set('plateau.columns', columns);
     }
 
     return functions;
+
+
+
+
+    
 
     // No modificar las variables del store directamente desde funciones privadas
     /*
@@ -62,7 +60,7 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
         },
         paintScenario = function () {
             // plateau
-            $cache.get('#plateau').css({
+            $c.get('#plateau').css({
                 height: store.plateau.rows + "vw",
                 width: store.plateau.columns + "vw"
             });
@@ -77,7 +75,7 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
                         })
                         .addClass('plateau-cell')
                         .appendTo(
-                            $cache.get('#plateau')
+                            $c.get('#plateau')
                         )
                         .click(function (event) {
                             cellClick(event);
@@ -211,15 +209,15 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
         },
         startedUi = function () {
             if (store.cycle.running) {
-                $cache.get('#plateau').attr('disabled', true);
-                $cache.get('#btn-start-gol').attr('disabled', true);
-                $cache.get('#btn-pause-gol').removeAttr('disabled');
+                $c.get('#plateau').attr('disabled', true);
+                $c.get('#btn-start-gol').attr('disabled', true);
+                $c.get('#btn-pause-gol').removeAttr('disabled');
                 return;
             }
 
-            $cache.get('#plateau').removeAttr('disabled');
-            $cache.get('#btn-start-gol').removeAttr('disabled');
-            $cache.get('#btn-pause-gol').attr('disabled', true);
+            $c.get('#plateau').removeAttr('disabled');
+            $c.get('#btn-start-gol').removeAttr('disabled');
+            $c.get('#btn-pause-gol').attr('disabled', true);
         },
         checkCellStatus = function (cell, colindantes, field) {                
             // Cada celda con uno o ningún vecino          -> muere.

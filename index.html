@@ -30,44 +30,78 @@
                     <p>
                         <a href="https://www.youtube.com/watch?v=CgOcEZinQ2I" target="_blank">https://www.youtube.com/watch?v=CgOcEZinQ2I</a>
                     </p>
+
+                    <div id="plateau" class="plateau"></div>
                 </div>
 
                 <div class="col-sm-12 col-md-5">
                     <div class="plateau-generator">
-                        <form id="form-plateau-generator">
-                            <div class="input-group">
-                                <input id="form-rows" name="form-rows" type="text" class="form-control" placeholder="Rows">
-                                <input id="form-columns" name="form-columns" type="text" class="form-control" placeholder="Columns">
+                        <div class="plateau-generator-block">
+                            <h2>Config:</h2>
+
+                            <ul class="list-group list-group-config">
+                                <li class="list-group-item">
+                                    Número máximo de filas:&nbsp;
+                                    <span id="config-plateau-max-rows" class="badge badge-default badge-pill"></span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    Número mínimo de filas:&nbsp;
+                                    <span id="config-plateau-min-rows" class="badge badge-default badge-pill"></span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    Número máximo de columnas:&nbsp;
+                                    <span id="config-plateau-max-columns" class="badge badge-default badge-pill"></span>
+                                </li>
+
+                                <li class="list-group-item">
+                                    Número mínimo de columnas:&nbsp;
+                                    <span id="config-plateau-min-columns" class="badge badge-default badge-pill"></span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="plateau-generator-block">
+                            <h2>Control:</h2>
+
+                            <div id="plateau-generator-control" class="input-group">
+                                <input id="form-rows" name="form-rows" type="text" class="form-control" placeholder="Número de filas">
+                                <input id="form-columns" name="form-columns" type="text" class="form-control" placeholder="Número de columnas">
 
                                 <span class="input-group-btn">
-                                    <button id="btn-plateau-generator" class="btn btn-secondary" type="button">
-                                        <i class="fa fa-table" aria-hidden="true"></i>
-                                    </button>
-                                </span>
+                                <button id="btn-plateau-generator" class="btn btn-primary btn-plateau-generator" type="button">
+                                    <i class="fa fa-cube" aria-hidden="true"></i>
+                                </button>
+                            </span>
                             </div>
-                        </form>
-                    </div>
+                        </div>
 
-                    <div class="plateau-controllers">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button id="btn-start-gol" class="btn btn-primary">
-                                <i class="fa fa-play" aria-hidden="true"></i>
-                            </button>
+                        <div class="plateau-generator-block">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button id="btn-start-gol" class="btn btn-primary">
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                </button>
 
-                            <button id="btn-pause-gol" class="btn btn-warning" disabled>
-                                <i class="fa fa-pause" aria-hidden="true"></i>
-                            </button>
+                                <button id="btn-pause-gol" class="btn btn-warning" disabled>
+                                    <i class="fa fa-pause" aria-hidden="true"></i>
+                                </button>
 
-                            <button id="btn-reset-gol" class="btn btn-cancel">
-                                <i class="fa fa-stop" aria-hidden="true"></i>
-                            </button>
+                                <button id="btn-reset-gol" class="btn btn-cancel">
+                                    <i class="fa fa-stop" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="plateau-generator-block">
+                            <h3>Console output:</h3>
+
+                            <div id="console-output" class="console-output"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id="plateau" class="plateau"></div>
     </div>
 
     <script data-main="js/app" src="node_modules/requirejs/require.js"></script>

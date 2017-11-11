@@ -7,7 +7,7 @@ require.config(
             root: '../',
             lang: '../lang/',
             callback: function () {
-                console.log("Init config file.");
+                console.log("Loaded require config file.");
             }
         };
 

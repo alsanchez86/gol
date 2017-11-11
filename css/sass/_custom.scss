@@ -1,56 +1,87 @@
 body {}
 
-div.plateau-generator {
-    margin-bottom: $space;
+h1 {
+    small {
+        font-weight: 300;
+        font-style: italic;
+        color: $primary-color;
+    }
 }
 
-div.plateau-controllers {
-    margin-bottom: $space;
+div.plateau-generator {
+    margin-bottom: $space + $space / 2;
+    div.plateau-generator-block {
+        margin-bottom: $space + $space / 2;
+    }
 }
 
 div.main-container {
     padding: 3rem 0;
 }
 
-div.plateau {    
+div.plateau {
     margin: 2vw auto;
-
     background-color: #000;
-    overflow: hidden;    
-
+    overflow: hidden;
     &[disabled],
-    &.disabled {       
+    &.disabled {
         div.plateau-cell {
             pointer-events: none;
-
             -webkit-box-shadow: 0 0 0 $cell-border-size rgba(240, 100, 50, 1);
             -moz-box-shadow: 0 0 0 $cell-border-size rgba(240, 100, 50, 1);
-            box-shadow: 0 0 0 $cell-border-size rgba(240, 100, 50, 1);     
+            box-shadow: 0 0 0 $cell-border-size rgba(240, 100, 50, 1);
         }
     }
-
-    div.plateau-cell {        
+    div.plateau-cell {
         height: $cell-size;
         width: $cell-size;
         float: left;
-
-        -webkit-box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1); 
-        -moz-box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1); 
-        box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1); 
+        -webkit-box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1);
+        -moz-box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1);
+        box-shadow: 0 0 0 $cell-border-size rgba(90, 254, 61, 1);
         cursor: pointer;
-
         &.live {
             background-color: #FFF000;
         }
-
         &.highlight {
             background-color: #FF0000;
         }
-
         &.highlight-colindante {
             background-color: #000FFF;
         }
     }
+}
+
+div.console-output {
+    @include border(1px solid $primary-color-light, 5px);
+    height: 12rem;    
+    padding: 0.6rem;
+    overflow-y: scroll;
+
+    p {
+        margin-bottom: 0.3rem;
+
+        &.error {
+            color: red;
+        }
+
+        &.success {
+            color: green;
+        }
+    }
+}
+
+ul.list-group-config {
+    li {
+        span {
+            font-weight: 700;
+            background-color: $primary-color;
+        }
+    }
+}
+
+button.btn-plateau-generator {
+    @include btn($primary-color-text);
 }
 
 // GRID COMPONENT

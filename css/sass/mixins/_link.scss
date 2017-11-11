@@ -1,22 +1,13 @@
-@mixin link (
-    $color: 					        $link-color,
-    $color-hover: 				    $link-hover-color,
-    $text-decoration:			    $link-decoration,
-    $text-decoration-hover: 	$link-decoration,
-    $background-color: 			  transparent,
-    $background-color-hover: 	transparent
-  ){
-
-	color: $color;
-	text-decoration: $text-decoration;
-	background-color: $background-color;
-
-	&:hover,
+@mixin link ($color : $link-color, $color-hover : $link-hover-color, $text-decoration : $link-decoration, $text-decoration-hover : $link-decoration, $background-color : transparent, $background-color-hover : transparent) {
+  color: $color;
+  text-decoration: $text-decoration;
+  background-color: $background-color;
+  &:hover,
   &:focus,
   &.active,
   &:active {
-		color: $color-hover;
-		text-decoration: $text-decoration-hover;
-		background-color: $background-color-hover;
+    color: $color-hover;
+    text-decoration: $text-decoration-hover;
+    background-color: $background-color-hover;
   }
 }

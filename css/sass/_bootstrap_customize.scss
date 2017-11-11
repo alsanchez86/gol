@@ -4,13 +4,12 @@
 
 // buttons cursor pointer by default
 .btn {
-    @include text ($roboto, 0.8rem, 400, normal, $primary-text-color, center, capitalize, 100%);    
-    padding: 0.6rem 1rem;
-    cursor: pointer;      
-    
-    &[disabled]{
-      opacity: .3;
-    }
+  @include text ($roboto, 0.8rem, 400, normal, $primary-text-color, center, capitalize, 100%);
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  &[disabled] {
+    opacity: .3;
+  }
 }
 
 // disabled
@@ -21,21 +20,20 @@
 // selectors
 .custom-select,
 select.form-control {
-    @include text ($roboto, 0.6rem, 400, normal, $primary-text-color, center, capitalize, 100%);
-    height: auto;
-    width: 100%;
-    margin-bottom: .5rem;
-    padding: 0.6rem 1.75rem 0.6rem 0.75rem;
-    cursor: pointer;
-
-    option {
-      line-height: 100%;
-    }
+  @include text ($roboto, 0.6rem, 400, normal, $primary-text-color, center, capitalize, 100%);
+  height: auto;
+  width: 100%;
+  margin-bottom: .5rem;
+  padding: 0.6rem 1.75rem 0.6rem 0.75rem;
+  cursor: pointer;
+  option {
+    line-height: 100%;
+  }
 }
 
 select.form-control {
   &:not([size]) {
-    &:not([multiple]){
+    &:not([multiple]) {
       height: auto;
     }
   }
@@ -48,42 +46,37 @@ label {
 
 // img fluid center
 .img-fluid-center {
-    @include img-fluid;
-    display: block;
-    margin: auto;
+  @include img-fluid;
+  display: block;
+  margin: auto;
 }
 
 // btn groups
 .btn-group {
   .btn {
-      border-right: 1px solid transparent;
-      border-left: 1px solid transparent;
-
-      &:first-child {
-        border-left: 0;
-      }
-
-      &:last-child {
-        border-right: 0;
-      }
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
+    &:first-child {
+      border-left: 0;
+    }
+    &:last-child {
+      border-right: 0;
+    }
   }
 }
 
 // collapse
-.card {  
+.card {
   .card-header {
     padding: 0;
-
     &.active {
       border-color: $primary-color;
       border-bottom-style: dotted;
     }
-
     a {
-        @include link($primary-text-color, $link-hover-color, none, none);
-        display: block;
-        padding: 0.75rem 1.25rem;
+      @include link($primary-text-color, $link-hover-color, none, none);
+      display: block;
+      padding: 0.75rem 1.25rem;
     }
   }
 }
-

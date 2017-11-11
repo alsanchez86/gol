@@ -58,7 +58,7 @@ define(['log', 'lodash'], function (log, _) {
 
     store.set = function (key, value) {
         _.set(_this, key, value);
-        log.write('store.setting_property', key, value);
+        log.write('store.setting_property', [key, value]);
     }
 
     store.get = function (key) {
@@ -67,7 +67,7 @@ define(['log', 'lodash'], function (log, _) {
 
     store.remove = function (key) {
         if (_.unset(_this, key)) {
-            log.write('store.remove_property', key);
+            log.write('store.remove_property', [key]);
         }
     }
 

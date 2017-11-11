@@ -1,6 +1,4 @@
-@mixin img-responsive (
-  $display: block
-){
+@mixin img-responsive ($display: block) {
   display: $display;
   width: 100% \9; // IE 8-10 hack bug
   max-width: 100%; // Part 1: Set a maximum relative to the parent

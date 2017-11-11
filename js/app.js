@@ -7,31 +7,40 @@ require(['require-config'], function () {
         require(['bootstrap'], function () {
             // jquery document ready
             $(function () {
-                require(['$cache', 'functions', 'log'], function ($cache, f, log) {
-                    $cache.get('#btn-start-gol').click(function () {
+                require(['json!config', '$cache', 'functions', 'log'], function (config, $c, f, log) {
+                    log.write('general.load_config');
+
+                    // show config data
+                    $c.get('#config-plateau-max-rows').text(config.plateau.rows.max);
+                    $c.get('#config-plateau-max-columns').text(config.plateau.columns.max);
+                    $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
+                    $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
+
+                    $c.get('#btn-start-gol').click(function () {
                         f.start();
                     });
 
-                    $cache.get('#btn-pause-gol').click(function () {
+                    $c.get('#btn-pause-gol').click(function () {
                         f.pause();
                     });
 
-                    $cache.get('#btn-reset-gol').click(function () {
+                    $c.get('#btn-reset-gol').click(function () {
                         f.reset();
                     });
 
-                    $cache.get('#btn-plateau-generator').click(function () {
-                        var rows = $cache.get('#form-rows').val(),
-                            columns = $cache.get('#form-columns').val();
+                    $c.get('#btn-plateau-generator').click(function () {
+                        var rows = $c.get('#form-rows').val(),
+                            columns = $c.get('#form-columns').val();
 
-                        f.setPlateauDimensions(rows, columns).then(function (){
-                            // f.setCells().then(function () {
-                            //     f.paintScenario();
-                            // });
-                        });
+                        if (f.exceedPlateauLimits(rows, columns)) {
+                            log.write('plateau.invalid_plateau');
+                            $c.get('#plateau-generator-control').addClass("has-danger");
+                            return;
+                        }
 
-                        // Cada método se debe ejecutar dentro de un callback del anterior
-                        // Podemos hacer que la función devuelva una promesa (.then) de forma que podramos ejecutar código cuando esta se cumpla
+                        $c.get('#plateau-generator-control').removeClass("has-danger");
+                        f.setPlateauDimensions(rows, columns);
+
                         // f.setPlateau(rows, columns);
                         // f.setCells();
                         // f.paintScenario();
