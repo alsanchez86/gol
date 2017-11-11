@@ -21,12 +21,14 @@ require(['require-config'], function () {
                     });
 
                     $cache.get('#btn-plateau-generator').click(function () {
-                        var rows = parseInt($cache.get('#form-rows').val()),
-                            columns = parseInt($cache.get('#form-columns').val());
+                        var rows = $cache.get('#form-rows').val(),
+                            columns = $cache.get('#form-columns').val();
 
-                        if (f.checkPlateauMax(rows, columns)) {
-                            // return log.write('plateau.max_plateau');
-                        }
+                        f.setPlateauDimensions(rows, columns).then(function (){
+                            // f.setCells().then(function () {
+                            //     f.paintScenario();
+                            // });
+                        });
 
                         // Cada método se debe ejecutar dentro de un callback del anterior
                         // Podemos hacer que la función devuelva una promesa (.then) de forma que podramos ejecutar código cuando esta se cumpla

@@ -1,7 +1,17 @@
-define(['$cache', 'store', 'lodash', 'log'], function ($cache, store, _, log) {
+define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $cache, store, _, log) {
     // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
     var functions = {},
         _this = {};
+
+    _this.exceedPlateauLimits = function (rows, columns) {
+        rows = _.toInteger(rows);
+        columns = _.toInteger(columns);
+
+        var mins = rows >= config.plateau.rows.min && columns >= config.plateau.columns.min,
+            maxs = rows <= config.plateau.rows.max && columns <= config.plateau.columns.max;
+
+        return mins && maxs;
+    }
 
     functions.paintCellStatus = function (status, id) {
         if (!status) {
@@ -9,12 +19,21 @@ define(['$cache', 'store', 'lodash', 'log'], function ($cache, store, _, log) {
             return;
         }
         $cache.get("#" + id).addClass('live');
-    }
+    }    
 
-    functions.checkPlateauMax = function () {        
-        // store.set('cycle.current', 3);
-        store.set('cycle.current', 4);
-        store.get('cycle.current');
+    functions.setPlateauDimensions = function (rows, columns) {
+        rows = _.toInteger(rows);
+        columns = _.toInteger(columns);
+
+        if (!_this.exceedPlateauLimits(rows, columns)) {
+            log.write('plateau.max_plateau');
+            return;
+        }       
+
+        store.set('plateau.rows', rows);
+        store.set('plateau.columns', columns); 
+        
+        // return promise;
     }
 
     return functions;
@@ -22,7 +41,7 @@ define(['$cache', 'store', 'lodash', 'log'], function ($cache, store, _, log) {
     // No modificar las variables del store directamente desde funciones privadas
     /*
     return {
-        setPlateau = function (rows, columns) {
+        setPlateauDimensions = function (rows, columns) {
             store.plateau.rows = rows;
             store.plateau.columns = columns;
         },

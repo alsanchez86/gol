@@ -1,0 +1,12 @@
+{
+    "plateau": {
+        "rows": {
+            "max": 10,
+            "min": 1
+        },
+        "columns": {
+            "max": 10,
+            "min": 1
+        }        
+    }
+}

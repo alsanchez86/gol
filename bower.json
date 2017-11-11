@@ -3,6 +3,7 @@
   "dependencies": {
     "bootstrap": "v4.0.0-alpha.6",
     "lodash": "*",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "requirejs-plugins": "^1.0.3"
   }
 }

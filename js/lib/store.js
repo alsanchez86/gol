@@ -1,4 +1,4 @@
-define(['log', 'loadash'], function (log, _) {
+define(['log', 'lodash'], function (log, _) {
     var store = {},
         _this = {
             cycle: {
@@ -56,14 +56,19 @@ define(['log', 'loadash'], function (log, _) {
             ]
         };
 
-    // si ya existe la propiedad en el store, actualizarla
-    // si no existe la propiedad en el store, crearla
-    store.set = function (key, value) {        
+    store.set = function (key, value) {
         _.set(_this, key, value);
+        log.write('store.setting_property', key, value);
     }
 
     store.get = function (key) {
-        _.get(_this, key);
+        return _.get(_this, key);
+    }
+
+    store.remove = function (key) {
+        if (_.unset(_this, key)) {
+            log.write('store.remove_property', key);
+        }
     }
 
     return store;

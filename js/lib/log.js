@@ -1,22 +1,8 @@
 // tomar mensajes de un JSON externo ¿cargado con requireJS, plugin?
 // Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 
-define(['helpers', 'lodash'], function (helpers, _) {
-    var log = {};
-    var _messages = {
-        general: {
-            load_config: 'Loaded config file.'
-        },
-        plateau: {
-            max_plateau: 'Se ha sobrepasado el máximo de celdas permitidas.',
-        },
-        store: {
-            select_property: "Select a property from the store.",
-            errors: {
-                hasnt_property: "Error: Property {} dont exists in the store.",
-            }          
-        }
-    }
+define(['json!es', 'lodash'], function (es, _) {
+    var log = {};    
 
     log.write = function (key, aux) {
         var message = this.get(key);
@@ -31,7 +17,7 @@ define(['helpers', 'lodash'], function (helpers, _) {
     }
 
     log.get = function (key) {
-        return helpers.getPropertyValue(_messages, key);
+        return _.get(es, key);
     }
 
     return log;

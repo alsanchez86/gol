@@ -16,6 +16,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 
 ### Roadmap
 
+- Soporte a multiidioma en función del lenguage del navegador
 - Memoria de celdas ya checkeadas en cada iteración, para no chequearla más de una vez
 - Limitar número de celdas al crear la cuadrícula
 - Update CANVAS

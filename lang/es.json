@@ -1,0 +1,15 @@
+{
+    "general": {
+        "load_config": "Archivo de configuración cargado."
+    },
+    "plateau": {
+        "max_plateau": "Se ha sobrepasado el máximo de celdas permitidas."
+    },
+    "store": {
+        "select_property": "Selecciona una propiedad del store.",
+        "setting_property": "Seteando la propiedad {} del store a {}",
+        "errors": {
+            "hasnt_property": "Error: La propiedad {} no existe en el store."
+        }
+    }
+}
