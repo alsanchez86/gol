@@ -4,16 +4,16 @@ define(['jquery'], function ($) {
     var _this = {};
 
     _this.set = function (selector) {
-        cache[selector] = $(selector);
+        _this[selector] = $(selector);
     }
 
     cache.get = function (selector, force) {
-        if (cache[selector] !== undefined && force === undefined) {
-            return cache[selector];
+        if (_this[selector] !== undefined && force === undefined) {
+            return _this[selector];
         }
 
         _this.set(selector);
-        return cache[selector];
+        return _this[selector];
     }
     return cache;
 });
