@@ -16,6 +16,24 @@ require(['require-config'], function () {
                     $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
                     $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
 
+                    $c.get('#btn-plateau-generator')
+                        .removeClass('disabled')
+                        .click(function () {
+                            var rows = $c.get('#form-rows').val(),
+                                columns = $c.get('#form-columns').val();
+
+                            if (f.exceedPlateauLimits(rows, columns)) {
+                                log.write('plateau.invalid_plateau');
+                                $c.get('#plateau-generator-control').addClass("has-danger");
+                                return;
+                            }
+
+                            $c.get('#plateau-generator-control').removeClass("has-danger");
+                            f.setPlateauDimensions(rows, columns);
+                            f.setCells();
+                            f.paintScenario();
+                        });
+
                     $c.get('#btn-start-gol').click(function () {
                         f.start();
                     });
@@ -26,24 +44,6 @@ require(['require-config'], function () {
 
                     $c.get('#btn-reset-gol').click(function () {
                         f.reset();
-                    });
-
-                    $c.get('#btn-plateau-generator').click(function () {
-                        var rows = $c.get('#form-rows').val(),
-                            columns = $c.get('#form-columns').val();
-
-                        if (f.exceedPlateauLimits(rows, columns)) {
-                            log.write('plateau.invalid_plateau');
-                            $c.get('#plateau-generator-control').addClass("has-danger");
-                            return;
-                        }
-
-                        $c.get('#plateau-generator-control').removeClass("has-danger");
-                        f.setPlateauDimensions(rows, columns);
-
-                        // f.setPlateau(rows, columns);
-                        // f.setCells();
-                        // f.paintScenario();
                     });
                 });
             });

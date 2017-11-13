@@ -15,14 +15,13 @@ define(['json!es', 'lodash', '$cache'], function (es, _, $c) {
 
         if (message && _.isString(message)) {
             if (message.indexOf("{}") !== -1 && !_.isUndefined(array) && _.isArray(array)) {
-                _.forEach(array, function (value) {
-                    message = message.replace("{}", value);
+                _.forEach(array, function (value) {                    
+                    message = message.replace("{}", _.isArray(value) ? JSON.stringify(value) : value);
                 });
             }
             key = message;
         }
         console.log(key);
-
         $c.get('#console-output').html("<p class=" + type + "><i class=\"fa fa-info-circle\" aria-hidden=\"true\"></i>&nbsp;" + key + "</p>" + $c.get('#console-output').html());
     }
 

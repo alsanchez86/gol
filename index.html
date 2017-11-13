@@ -15,8 +15,8 @@
 <body>
     <div class="main-container">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-7">
+            <div class="row">                
+                <div class="col-sm-12 col-md-5">
                     <h1>
                         Game of life
                         <small>DEMO</small>
@@ -31,10 +31,6 @@
                         <a href="https://www.youtube.com/watch?v=CgOcEZinQ2I" target="_blank">https://www.youtube.com/watch?v=CgOcEZinQ2I</a>
                     </p>
 
-                    <div id="plateau" class="plateau"></div>
-                </div>
-
-                <div class="col-sm-12 col-md-5">
                     <div class="plateau-generator">
                         <div class="plateau-generator-block">
                             <h2>Config:</h2>
@@ -70,10 +66,10 @@
                                 <input id="form-columns" name="form-columns" type="text" class="form-control" placeholder="Número de columnas">
 
                                 <span class="input-group-btn">
-                                <button id="btn-plateau-generator" class="btn btn-primary btn-plateau-generator" type="button">
-                                    <i class="fa fa-cube" aria-hidden="true"></i>
-                                </button>
-                            </span>
+                                    <button id="btn-plateau-generator" class="btn btn-primary btn-plateau-generator disabled" type="button">
+                                        <i class="fa fa-cube" aria-hidden="true"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
 
@@ -99,6 +95,10 @@
                             <div id="console-output" class="console-output"></div>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-sm-12 col-md-7">
+                    <div id="plateau" class="plateau"></div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,14 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
     var functions = {},
         _this = {};
 
+    _this.paintCellStatus = function (status, id) {
+        if (!status) {
+            $c.get("#" + id).removeClass('live');
+            return;
+        }
+        $c.get("#" + id).addClass('live');
+    }
+
     functions.exceedPlateauLimits = function (rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
@@ -11,30 +19,77 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
             maxs = rows <= config.plateau.rows.max && columns <= config.plateau.columns.max;
 
         return !(mins && maxs);
-    }
-
-    functions.paintCellStatus = function (status, id) {
-        if (!status) {
-            $c.get("#" + id).removeClass('live');
-            return;
-        }
-        $c.get("#" + id).addClass('live');
     }    
 
     functions.setPlateauDimensions = function (rows, columns) {
         rows = _.toInteger(rows);
-        columns = _.toInteger(columns);    
+        columns = _.toInteger(columns);
 
         store.set('plateau.rows', rows);
         store.set('plateau.columns', columns);
     }
 
+    functions.setCells = function () {
+        var rows = store.get('plateau.rows'),
+            columns = store.get('plateau.columns'),
+            cells = [];
+
+        for (i = 1; i <= rows; i++) {
+            // columns 
+            for (u = 1; u <= columns; u++) {
+                cells.push({
+                    id: u + "-" + i,
+                    x: u,
+                    y: i,
+                    status: false,
+                    cycleStatus: false
+                });
+            }
+        }
+
+        store.set('plateau.cells', cells);
+    }
+
+    functions.paintScenario = function () {
+        // plateau
+        $c.get('#plateau').css({
+            height: store.get('plateau.rows') + "vw",
+            width: store.get('plateau.columns') + "vw"
+        });
+
+        // cells
+        _.forEach(
+            store.get('plateau.cells'),
+            function (cell) {
+                $('<div/>')
+                    .attr({
+                        id: cell.id
+                    })
+                    .addClass('plateau-cell')
+                    .appendTo(
+                        $c.get('#plateau')
+                    )
+                    .click(function (event) {
+                        functions.cellClick(event);
+                    });
+            });
+    }
+
+    functions.cellClick = function (event) {
+        if (store.get('cycle.running')) {
+            return;
+        }
+
+        var id = event.currentTarget.id;
+        var cell = _.find(store.get('plateau.cells'), {
+            id: id
+        });
+
+        cell.status = !cell.status;
+        _this.paintCellStatus(cell.status, id);
+    }
+
     return functions;
-
-
-
-
-    
 
     // No modificar las variables del store directamente desde funciones privadas
     /*

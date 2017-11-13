@@ -20,7 +20,7 @@ div.main-container {
 }
 
 div.plateau {
-    margin: 2vw auto;
+    margin: 0 auto;
     background-color: #000;
     overflow: hidden;
     &[disabled],
@@ -54,17 +54,14 @@ div.plateau {
 
 div.console-output {
     @include border(1px solid $primary-color-light, 5px);
-    height: 12rem;    
+    height: 12rem;
     padding: 0.6rem;
     overflow-y: scroll;
-
     p {
         margin-bottom: 0.3rem;
-
         &.error {
             color: red;
         }
-
         &.success {
             color: green;
         }
