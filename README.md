@@ -33,3 +33,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 
 - Module pattern: https://toddmotto.com/mastering-the-module-pattern/#creating-a-module
 - RequireJS: http://requirejs.org/docs/api.html
+
+### Issues
+
+- file:// not supported: https://jaketrent.com/post/cross-domain-requirejs-text/
