@@ -54,7 +54,7 @@ div.plateau {
 
 div.console-output {
     @include border(1px solid $primary-color-light, 5px);
-    height: 12rem;
+    height: 20rem;
     padding: 0.6rem;
     overflow-y: scroll;
     p {
