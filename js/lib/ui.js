@@ -1,6 +1,6 @@
 define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c, store, _, log) {
     // Los métodos del módulo que solamente se accedan desde el propio módulo, convertirlos en privado   
-    var functions = {},
+    var ui = {},
         _this = {};
 
     _this.paintCellStatus = function (status, id) {
@@ -11,7 +11,51 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
         $c.get("#" + id).addClass('live');
     }
 
-    functions.exceedPlateauLimits = function (rows, columns) {
+    ui.init = function () {
+        // show initial config data
+        // $c.get('#config-plateau-max-rows').text(config.plateau.rows.max);
+        // $c.get('#config-plateau-max-columns').text(config.plateau.columns.max);
+        // $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
+        // $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
+
+        // btn plateau generator click event
+        /*
+        $c.get('#btn-plateau-generator')
+            .removeClass('disabled')
+            .click(function () {
+                var rows = $c.get('#form-rows').val(),
+                    columns = $c.get('#form-columns').val();
+
+                if (f.exceedPlateauLimits(rows, columns)) {
+                    log.write('plateau.invalid_plateau');
+                    $c.get('#plateau-generator-control').addClass("has-danger");
+                    return;
+                }
+
+                $c.get('#plateau-generator-control').removeClass("has-danger");
+                f.setPlateauDimensions(rows, columns);
+                f.setCells();
+                f.paintScenario();
+            });
+
+        // btn start click event
+        $c.get('#btn-start-gol').click(function () {
+            f.start();
+        });
+
+        // btn pause click event
+        $c.get('#btn-pause-gol').click(function () {
+            f.pause();
+        });
+
+        // btn reset click event
+        $c.get('#btn-reset-gol').click(function () {
+            f.reset();
+        });
+        */
+    }
+
+    ui.exceedPlateauLimits = function (rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
@@ -19,9 +63,9 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
             maxs = rows <= config.plateau.rows.max && columns <= config.plateau.columns.max;
 
         return !(mins && maxs);
-    }    
+    }
 
-    functions.setPlateauDimensions = function (rows, columns) {
+    ui.setPlateauDimensions = function (rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
@@ -29,7 +73,7 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
         store.set('plateau.columns', columns);
     }
 
-    functions.setCells = function () {
+    ui.setCells = function () {
         var rows = store.get('plateau.rows'),
             columns = store.get('plateau.columns'),
             cells = [];
@@ -50,7 +94,7 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
         store.set('plateau.cells', cells);
     }
 
-    functions.paintScenario = function () {
+    ui.paintScenario = function () {
         // plateau
         $c.get('#plateau').css({
             height: store.get('plateau.rows') + "vw",
@@ -70,12 +114,12 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
                         $c.get('#plateau')
                     )
                     .click(function (event) {
-                        functions.cellClick(event);
+                        ui.cellClick(event);
                     });
             });
     }
 
-    functions.cellClick = function (event) {
+    ui.cellClick = function (event) {
         if (store.get('cycle.running')) {
             return;
         }
@@ -89,7 +133,7 @@ define(['json!config', '$cache', 'store', 'lodash', 'log'], function (config, $c
         _this.paintCellStatus(cell.status, id);
     }
 
-    return functions;
+    return ui;
 
     // No modificar las variables del store directamente desde funciones privadas
     /*

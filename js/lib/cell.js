@@ -1,3 +1,8 @@
+/*
+    TODO:
+
+    - Irá dentro del store
+*/
 define(function () {
     var cell = {},
         _this = {

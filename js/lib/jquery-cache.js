@@ -1,7 +1,7 @@
 define(['jquery'], function ($) {
     // cache read only
-    var cache = {};
-    var _this = {};
+    var cache = {},
+        _this = {};
 
     _this.set = function (selector) {
         _this[selector] = $(selector);

@@ -1,12 +1,15 @@
-// tomar mensajes de un JSON externo ¿cargado con requireJS, plugin?
-// Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
+/*
+    TODO:
+    
+    - Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
+*/
 
 define(['json!es', 'lodash', '$cache'], function (es, _, $c) {
     var log = {};
 
     /*
-        @param key: String (JSON nomenclature)
-        @param array: Array
+        @param key: String (JSON nomenclature) [./lang/es.json]
+        @param array: Array. [replace {}]
         @return void
     */
     log.write = function (key, array) {

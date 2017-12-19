@@ -22,13 +22,12 @@ require.config(
                 jquery: _this.bowerPath + 'jquery/dist/jquery.min',
                 tether: _this.bowerPath + 'tether/dist/js/tether.min',
                 bootstrap: _this.bowerPath + 'bootstrap/dist/js/bootstrap.min',
-                lodash: _this.bowerPath + 'lodash/dist/lodash.min',                
+                lodash: _this.bowerPath + 'lodash/dist/lodash.min',
                 $cache: _this.lib + 'jquery-cache',
-                store: _this.lib + 'store',
-                functions: _this.lib + 'functions',
                 helpers: _this.lib + 'helpers',
                 log: _this.lib + 'log',
-                app: 'app',
+                store: _this.lib + 'store',
+                ui: _this.lib + 'ui'
             },
             shim: {
                 tether: {
@@ -43,18 +42,15 @@ require.config(
                 helpers: {
                     deps: ['lodash']
                 },
-                store: {
-                    deps: ['log', 'helpers']
-                },
-                functions: {
-                    deps: ['$cache', 'store', 'lodash', 'log']
-                },
                 log: {
-                    deps: ['helpers', 'lodash']
+                    deps: ['json', 'lodash', '$cache']
                 },
-                app: {
-                    deps: ['jquery', 'tether', 'bootstrap', '$cache', 'functions', 'log']
+                store: {
+                    deps: ['log', 'lodash']
                 },
+                ui: {
+                    deps: ['json', '$cache', 'store', 'lodash', 'log']
+                }
             },
             callback: _this.callback
         };

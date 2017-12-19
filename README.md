@@ -19,18 +19,18 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 
 ### Roadmap
 
-- Memoria de celdas ya checkeadas en cada iteración, para no chequearla más de una vez
 - ~~Limitar número de celdas al crear la cuadrícula~~
-- Update CANVAS
+- Usar redux para tener control sobre el estado del store (http://es.redux.js.org/).
+- Memoria de celdas ya checkeadas en cada iteración, para no chequearla más de una vez.
+- Usar CANVAS para la representación del layout. Usar librería KONVA (https://konvajs.github.io/).
 - Checking for not valid cell's status
 - Save plateau status in localstorage for load
-- Implement RsJx
 - Implement Jasmine tests
 - Implement webpack (in another branch)
 - New branch Typescript
-- Ver distintas posibilidades con d3: https://d3js.org/
-- Soporte a multiidioma en función del lenguage del navegador
-- Implementar patrón observable para tracking de usuario (http://www.dofactory.com/javascript/observer-design-pattern)
+- Ver distintas posibilidades con d3: https://d3js.org/ [Descartado. Usaremos KONVA].
+- Soporte a multiidioma en función del lenguage del navegador.
+- Implementar patrón observable para tracking de usuario (http://www.dofactory.com/javascript/observer-design-pattern, http://reactivex.io/rxjs/).
 
 ### Issues
 

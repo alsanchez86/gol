@@ -1,3 +1,9 @@
+/*
+    TODO:
+    
+    - Implementar con REDUX. Puede que ya no sea necesario este módulo.
+*/
+
 define(['log', 'lodash'], function (log, _) {
     var store = {},
         _this = {
