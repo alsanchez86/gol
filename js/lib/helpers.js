@@ -1,4 +1,4 @@
-define(['lodash'], function (_) {
+define(["lodash"], function (_) {
     var helpers = {};
 
     /*
@@ -11,13 +11,13 @@ define(['lodash'], function (_) {
             return;
         }
 
-        var parts = key.split('.');
+        var parts = key.split(".");
 
         for (var i = 0; i < parts.length; i++) {
             obj = obj[parts[i]];
         }
         return obj;
-    }
+    };
 
     return helpers;
 });
