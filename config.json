@@ -2,11 +2,11 @@
     "plateau": {
         "rows": {
             "max": 10,
-            "min": 1
+            "min": 5
         },
         "columns": {
             "max": 10,
-            "min": 1
+            "min": 5
         }        
     }
 }

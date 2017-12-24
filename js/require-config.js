@@ -15,8 +15,7 @@ require.config(
         /* Public Vars */
         return {
             waitSeconds: 30,
-            baseUrl: "js",
-            enforceDefine: true,
+            baseUrl: "js",            
             paths: {
                 config: _this.root + "config.json",
                 es: _this.lang + "es.json",

@@ -15,51 +15,14 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         $c.get("#" + id).addClass("live");
     }
 
-    /* Public Methods */
-    ui.init = function () {
-        // show initial config data
-        // $c.get('#config-plateau-max-rows').text(config.plateau.rows.max);
-        // $c.get('#config-plateau-max-columns').text(config.plateau.columns.max);
-        // $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
-        // $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
-        // btn plateau generator click event
-        /*
-                $c.get('#btn-plateau-generator')
-                    .removeClass('disabled')
-                    .click(function () {
-                        var rows = $c.get('#form-rows').val(),
-                            columns = $c.get('#form-columns').val();
+    function _showConfig() {
+        $c.get('#config-plateau-max-rows').text(config.plateau.rows.max);
+        $c.get('#config-plateau-max-columns').text(config.plateau.columns.max);
+        $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
+        $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
+    }
 
-                        if (f.exceedPlateauLimits(rows, columns)) {
-                            log.write('plateau.invalid_plateau');
-                            $c.get('#plateau-generator-control').addClass("has-danger");
-                            return;
-                        }
-
-                        $c.get('#plateau-generator-control').removeClass("has-danger");
-                        f.setPlateauDimensions(rows, columns);
-                        f.setCells();
-                        f.paintScenario();
-                    });
-
-                // btn start click event
-                $c.get('#btn-start-gol').click(function () {
-                    f.start();
-                });
-
-                // btn pause click event
-                $c.get('#btn-pause-gol').click(function () {
-                    f.pause();
-                });
-
-                // btn reset click event
-                $c.get('#btn-reset-gol').click(function () {
-                    f.reset();
-                });
-                */
-    };
-
-    ui.exceedPlateauLimits = function (rows, columns) {
+    function _exceedPlateauLimits(rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
@@ -71,17 +34,17 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
             columns <= config.plateau.columns.max;
 
         return !(mins && maxs);
-    };
+    }
 
-    ui.setPlateauDimensions = function (rows, columns) {
+    function _setPlateauDimensions(rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
         store.set("plateau.rows", rows);
         store.set("plateau.columns", columns);
-    };
+    }
 
-    ui.setCells = function () {
+    function _setCells() {
         var rows = store.get("plateau.rows"),
             columns = store.get("plateau.columns"),
             cells = [];
@@ -100,9 +63,9 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         }
 
         store.set("plateau.cells", cells);
-    };
+    }
 
-    ui.paintScenario = function () {
+    function _paintScenario() {
         // plateau
         $c.get("#plateau").css({
             height: store.get("plateau.rows") + "vw",
@@ -121,6 +84,95 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
                     ui.cellClick(event);
                 });
         });
+    }
+
+    function _initButtonStatus(){
+        // set also by html
+        $c.get('#plateau').attr('disabled', true);
+        $c.get('#btn-start-gol').attr('disabled', true);
+        $c.get('#btn-pause-gol').attr('disabled', true);
+    }
+
+    function _initInterval() {
+        store.cycle.interval = setInterval(function () {
+            var lives = goOne();
+
+            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {
+                console.log('GAME OVER');
+                reset();
+                return;
+            }
+
+            store.cycle.current++;
+            console.log("Cycle: " + store.cycle.current);
+
+        }, store.cycle.time);
+    }
+
+    function _startedUi() {
+        if (store.cycle.running) {
+            $c.get('#plateau').attr('disabled', true);
+            $c.get('#btn-start-gol').attr('disabled', true);
+            $c.get('#btn-pause-gol').removeAttr('disabled');
+            return;
+        }
+
+        $c.get('#plateau').removeAttr('disabled');
+        $c.get('#btn-start-gol').removeAttr('disabled');
+        $c.get('#btn-pause-gol').attr('disabled', true);
+    }
+
+    function _start() {
+        if (!store.cycle.running){
+            store.cycle.running = true;
+            _startedUi();
+            _initInterval();
+        }        
+    }
+
+    function _registerButtonsEvents() {
+        // btn plateau generator click event        
+        $c.get('#btn-plateau-generator')
+            .removeClass('disabled')
+            .click(function () {
+                var rows = $c.get('#form-rows').val(),
+                    columns = $c.get('#form-columns').val();
+
+                if (_exceedPlateauLimits(rows, columns)) {
+                    log.write('plateau.invalid_plateau');
+                    $c.get('#plateau-generator-control').addClass("has-danger");
+                    return;
+                }
+
+                $c.get('#plateau-generator-control').removeClass("has-danger");
+
+                _setPlateauDimensions(rows, columns);
+                _setCells();
+                _paintScenario();
+            });
+
+        // btn start click event
+        $c.get('#btn-start-gol').click(function () {
+            _start();
+        });
+
+        // btn pause click event
+        $c.get('#btn-pause-gol').click(function () {
+            _pause();
+        });
+
+        // btn reset click event
+        $c.get('#btn-reset-gol').click(function () {
+            _reset();
+        });
+    }
+
+    /* Public Methods */
+    ui.init = function () {
+        // show initial config data
+        _showConfig();
+        _initButtonStatus();
+        _registerButtonsEvents();
     };
 
     ui.cellClick = function (event) {

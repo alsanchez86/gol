@@ -1,5 +1,6 @@
 body {}
 
+// text
 h1 {
     small {
         font-weight: 300;
@@ -8,6 +9,7 @@ h1 {
     }
 }
 
+// plateau
 div.plateau-generator {
     margin-bottom: $space + $space / 2;
     div.plateau-generator-block {
@@ -77,9 +79,16 @@ ul.list-group-config {
     }
 }
 
+// buttons
 button.btn-plateau-generator {
     @include btn($primary-color-text);
 }
+
+// button.btn {
+//     &.btn-primary {
+//         @include btn($primary-color-text);
+//     }
+// }
 
 // GRID COMPONENT
 @include media-breakpoint-only(xs) {}
