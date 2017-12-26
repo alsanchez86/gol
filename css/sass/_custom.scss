@@ -84,6 +84,20 @@ button.btn-plateau-generator {
     @include btn($primary-color-text);
 }
 
+div.plateau-generator-block {
+    button.btn-primary {
+        @include btn($primary-color-text);
+    }
+
+    button.btn-warning {
+        @include btn($btn-warning-color, $btn-warning-color, $btn-warning-bg, $btn-warning-bg);
+    }
+
+    button.btn-danger {
+        @include btn($btn-danger-color, $btn-danger-color, $btn-danger-bg, $btn-danger-bg);
+    }
+}
+
 // GRID COMPONENT
 @include media-breakpoint-only(xs) {}
 

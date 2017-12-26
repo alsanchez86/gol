@@ -15,6 +15,7 @@ define(["log", "lodash"], function (log, _) {
                 running: false
             },
             plateau: {
+                created: false,
                 rows: 0,
                 columns: 0,
                 cells: []

@@ -29,7 +29,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 - Implement webpack (in another branch)
 - New branch Typescript
 - Ver distintas posibilidades con d3: https://d3js.org/ [Descartado. Usaremos KONVA].
-- Soporte a multiidioma en función del lenguage del navegador.
+- Soporte a multiidioma en función del lenguage del navegador. http://requirejs.org/docs/api.html#i18n
 - Implementar patrón observable para tracking de usuario (http://www.dofactory.com/javascript/observer-design-pattern, http://reactivex.io/rxjs/).
 
 ### Issues

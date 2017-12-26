@@ -62,11 +62,12 @@
                             <h2>Control:</h2>
 
                             <div id="plateau-generator-control" class="input-group">
-                                <input id="form-rows" name="form-rows" type="text" class="form-control" placeholder="Número de filas">
-                                <input id="form-columns" name="form-columns" type="text" class="form-control" placeholder="Número de columnas">
+                                <input id="form-rows" name="form-rows" type="text" class="form-control" placeholder="Número de filas" disabled>
+
+                                <input id="form-columns" name="form-columns" type="text" class="form-control" placeholder="Número de columnas" disabled>
 
                                 <span class="input-group-btn">
-                                    <button id="btn-plateau-generator" class="btn btn-primary btn-plateau-generator disabled" type="button">
+                                    <button id="btn-plateau-generator" class="btn btn-primary btn-plateau-generator" type="button" disabled>
                                         <i class="fa fa-cube" aria-hidden="true"></i>
                                     </button>
                                 </span>
@@ -83,7 +84,7 @@
                                     <i class="fa fa-pause" aria-hidden="true"></i>
                                 </button>
 
-                                <button id="btn-reset-gol" class="btn btn-cancel" disabled>
+                                <button id="btn-reset-gol" class="btn btn-danger" disabled>
                                     <i class="fa fa-stop" aria-hidden="true"></i>
                                 </button>
                             </div>

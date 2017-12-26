@@ -22,16 +22,12 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
     }
 
-    function _exceedPlateauLimits(rows, columns) {
+    function _validatePlateauLimits(rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
-        var mins =
-            rows >= config.plateau.rows.min &&
-            columns >= config.plateau.columns.min,
-            maxs =
-            rows <= config.plateau.rows.max &&
-            columns <= config.plateau.columns.max;
+        var mins = rows >= config.plateau.rows.min && columns >= config.plateau.columns.min;
+        var maxs = rows <= config.plateau.rows.max && columns <= config.plateau.columns.max;
 
         return !(mins && maxs);
     }
@@ -86,11 +82,22 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         });
     }
 
-    function _initButtonStatus(){
-        // set also by html
-        $c.get('#plateau').attr('disabled', true);
-        $c.get('#btn-start-gol').attr('disabled', true);
-        $c.get('#btn-pause-gol').attr('disabled', true);
+    function _updateUiStatus(){
+        var created = store.get('plateau.created');
+        var running = store.get('cycle.running');
+
+        // plateau
+        $c.get('#plateau').attr('disabled', !created || running);
+
+        // form
+        $c.get('#form-rows').attr('disabled', created || running);
+        $c.get('#form-columns').attr('disabled', created || running);
+        
+        // ui buttons
+        $c.get('#btn-plateau-generator').attr('disabled', !created || running);
+        $c.get('#btn-start-gol').attr('disabled', !created || running);
+        $c.get('#btn-pause-gol').attr('disabled', !created || !running);
+        $c.get('#btn-reset-gol').attr('disabled', !created || running);
     }
 
     function _initInterval() {
@@ -109,36 +116,38 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         }, store.cycle.time);
     }
 
-    function _startedUi() {
-        if (store.cycle.running) {
-            $c.get('#plateau').attr('disabled', true);
-            $c.get('#btn-start-gol').attr('disabled', true);
-            $c.get('#btn-pause-gol').removeAttr('disabled');
-            return;
-        }
-
-        $c.get('#plateau').removeAttr('disabled');
-        $c.get('#btn-start-gol').removeAttr('disabled');
-        $c.get('#btn-pause-gol').attr('disabled', true);
-    }
-
     function _start() {
-        if (!store.cycle.running){
-            store.cycle.running = true;
-            _startedUi();
+        if (!store.get('cycle.running')){
+            store.set('cycle.running', true);
+            _updateUiStatus();
             _initInterval();
         }        
     }
 
-    function _registerButtonsEvents() {
+    function _registerUiEvents() {
+        // INPUTS
+        $c.get('#form-rows').keyup(function (event) {
+            var rows = $c.get('#form-rows').val();
+            var columns = $c.get('#form-columns').val();
+
+            $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns);
+        });
+
+        $c.get('#form-columns').keyup(function (event) {
+            var rows = $c.get('#form-rows').val();
+            var columns = $c.get('#form-columns').val();
+
+            $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns);
+        });
+
+        // BUTTONS
         // btn plateau generator click event        
         $c.get('#btn-plateau-generator')
-            .removeClass('disabled')
             .click(function () {
-                var rows = $c.get('#form-rows').val(),
-                    columns = $c.get('#form-columns').val();
+                var rows = $c.get('#form-rows').val();
+                var columns = $c.get('#form-columns').val();
 
-                if (_exceedPlateauLimits(rows, columns)) {
+                if (_validatePlateauLimits(rows, columns)) {
                     log.write('plateau.invalid_plateau');
                     $c.get('#plateau-generator-control').addClass("has-danger");
                     return;
@@ -169,10 +178,9 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
 
     /* Public Methods */
     ui.init = function () {
-        // show initial config data
+        _registerUiEvents();
+        _updateUiStatus();
         _showConfig();
-        _initButtonStatus();
-        _registerButtonsEvents();
     };
 
     ui.cellClick = function (event) {

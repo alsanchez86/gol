@@ -6,6 +6,7 @@
 
 define(["json!es", "lodash", "$cache"], function (es, _, $c) {
     /* Private Vars */
+    var replace = "%%";
     
     /* Public Vars */
     var log = {};
@@ -15,7 +16,7 @@ define(["json!es", "lodash", "$cache"], function (es, _, $c) {
     /* Public Methods */
     /*
         @param key: String (JSON nomenclature) [./lang/es.json]
-        @param array: Array. [replace {}]
+        @param array: Array. [replace %%]
         @return void
     */
     log.write = function (key, array) {
@@ -24,13 +25,13 @@ define(["json!es", "lodash", "$cache"], function (es, _, $c) {
 
         if (message && _.isString(message)) {
             if (
-                message.indexOf("{}") !== -1 &&
+                message.indexOf(replace) !== -1 &&
                 !_.isUndefined(array) &&
                 _.isArray(array)
             ) {
                 _.forEach(array, function (value) {
                     message = message.replace(
-                        "{}",
+                        replace,
                         _.isArray(value) ? JSON.stringify(value) : value
                     );
                 });

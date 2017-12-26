@@ -15,7 +15,7 @@ require.config(
         /* Public Vars */
         return {
             waitSeconds: 30,
-            baseUrl: "js",            
+            baseUrl: "js",
             paths: {
                 config: _this.root + "config.json",
                 es: _this.lang + "es.json",
@@ -40,6 +40,9 @@ require.config(
                 },
                 $cache: {
                     deps: ["jquery"]
+                },
+                lodash: {
+                    exports: '_'
                 },
                 helpers: {
                     deps: ["lodash"]
