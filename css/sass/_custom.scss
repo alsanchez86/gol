@@ -84,12 +84,6 @@ button.btn-plateau-generator {
     @include btn($primary-color-text);
 }
 
-// button.btn {
-//     &.btn-primary {
-//         @include btn($primary-color-text);
-//     }
-// }
-
 // GRID COMPONENT
 @include media-breakpoint-only(xs) {}
 
