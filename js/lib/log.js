@@ -1,6 +1,5 @@
 /*
     TODO:
-    
     - Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 */
 

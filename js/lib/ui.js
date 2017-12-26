@@ -1,6 +1,5 @@
 define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c, store, _, log) {
     /* Private Vars */
-    var _this = {};
 
     /* Public Vars */
     var ui = {};
@@ -16,6 +15,7 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
     }
 
     function _showConfig() {
+        // show config on ui
         $c.get('#config-plateau-max-rows').text(config.plateau.rows.max);
         $c.get('#config-plateau-max-columns').text(config.plateau.columns.max);
         $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
@@ -82,7 +82,7 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         });
     }
 
-    function _updateUiStatus(){
+    function _updateUiStatus() {
         var created = store.get('plateau.created');
         var running = store.get('cycle.running');
 
@@ -92,12 +92,32 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         // form
         $c.get('#form-rows').attr('disabled', created || running);
         $c.get('#form-columns').attr('disabled', created || running);
-        
+
         // ui buttons
         $c.get('#btn-plateau-generator').attr('disabled', !created || running);
         $c.get('#btn-start-gol').attr('disabled', !created || running);
         $c.get('#btn-pause-gol').attr('disabled', !created || !running);
         $c.get('#btn-reset-gol').attr('disabled', !created || running);
+    }
+
+    function _setInitValues() {
+        $c.get('#form-rows')
+            .attr({
+                placeholder: config.plateau.rows.max,
+                min: config.plateau.rows.min,
+                max: config.plateau.rows.max
+            })
+            .val(config.plateau.rows.max)
+            .trigger("change");
+
+        $c.get('#form-columns')
+            .attr({
+                placeholder: config.plateau.columns.max,
+                min: config.plateau.columns.min,
+                max: config.plateau.columns.max
+            })
+            .val(config.plateau.columns.max)
+            .trigger("change");
     }
 
     function _initInterval() {
@@ -117,27 +137,28 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
     }
 
     function _start() {
-        if (!store.get('cycle.running')){
+        if (!store.get('cycle.running')) {
             store.set('cycle.running', true);
             _updateUiStatus();
             _initInterval();
-        }        
+        }
+    }
+
+    function _btnPlateauStatus() {
+        var rows = $c.get('#form-rows').val();
+        var columns = $c.get('#form-columns').val();
+
+        $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns);
     }
 
     function _registerUiEvents() {
         // INPUTS
-        $c.get('#form-rows').keyup(function (event) {
-            var rows = $c.get('#form-rows').val();
-            var columns = $c.get('#form-columns').val();
-
-            $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns);
+        $c.get('#form-rows').bind('keyup change', function () {
+            _btnPlateauStatus();
         });
 
-        $c.get('#form-columns').keyup(function (event) {
-            var rows = $c.get('#form-rows').val();
-            var columns = $c.get('#form-columns').val();
-
-            $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns);
+        $c.get('#form-columns').bind('keyup change', function () {
+            _btnPlateauStatus();
         });
 
         // BUTTONS
@@ -181,6 +202,7 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         _registerUiEvents();
         _updateUiStatus();
         _showConfig();
+        _setInitValues();
     };
 
     ui.cellClick = function (event) {
