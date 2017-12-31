@@ -23,5 +23,7 @@ define(["jquery"], function ($) {
         _set(selector);
         return _this[selector];
     };
+
+    /* Return Module */
     return cache;
 });

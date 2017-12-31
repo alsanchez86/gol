@@ -29,7 +29,8 @@ require.config(
                 helpers: _this.lib + "helpers",
                 log: _this.lib + "log",
                 store: _this.lib + "store",
-                ui: _this.lib + "ui"
+                ui: _this.lib + "ui",
+                plateau: _this.lib + "plateau"
             },
             shim: {
                 tether: {
@@ -51,11 +52,14 @@ require.config(
                     deps: ["json", "lodash", "$cache"]
                 },
                 store: {
-                    deps: ["log", "lodash"]
+                    deps: ["log", "lodash", "json"]
+                },
+                plateau: {
+                    deps: ["$cache", "store", "lodash"]
                 },
                 ui: {
-                    deps: ["json", "$cache", "store", "lodash", "log"]
-                }
+                    deps: ["$cache", "store", "lodash", "log", "plateau"]
+                }                
             },
             callback: _this.callback
         };

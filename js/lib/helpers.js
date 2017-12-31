@@ -19,5 +19,6 @@ define(["lodash"], function (_) {
         return obj;
     };
 
+    /* Return Module */
     return helpers;
 });

@@ -1,85 +1,16 @@
-define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c, store, _, log) {
+define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, log, plateau) {
     /* Private Vars */
 
     /* Public Vars */
     var ui = {};
 
     /* Private Methods */
-    function _paintCellStatus(status, id) {
-        if (!status) {
-            $c.get("#" + id).removeClass("live");
-            return;
-        }
-
-        $c.get("#" + id).addClass("live");
-    }
-
     function _showConfig() {
         // show config on ui
-        $c.get('#config-plateau-max-rows').text(config.plateau.rows.max);
-        $c.get('#config-plateau-max-columns').text(config.plateau.columns.max);
-        $c.get('#config-plateau-min-rows').text(config.plateau.rows.min);
-        $c.get('#config-plateau-min-columns').text(config.plateau.columns.min);
-    }
-
-    function _validatePlateauLimits(rows, columns) {
-        rows = _.toInteger(rows);
-        columns = _.toInteger(columns);
-
-        var mins = rows >= config.plateau.rows.min && columns >= config.plateau.columns.min;
-        var maxs = rows <= config.plateau.rows.max && columns <= config.plateau.columns.max;
-
-        return !(mins && maxs);
-    }
-
-    function _setPlateauDimensions(rows, columns) {
-        rows = _.toInteger(rows);
-        columns = _.toInteger(columns);
-
-        store.set("plateau.rows", rows);
-        store.set("plateau.columns", columns);
-    }
-
-    function _setCells() {
-        var rows = store.get("plateau.rows"),
-            columns = store.get("plateau.columns"),
-            cells = [];
-
-        for (i = 1; i <= rows; i++) {
-            // columns
-            for (u = 1; u <= columns; u++) {
-                cells.push({
-                    id: u + "-" + i,
-                    x: u,
-                    y: i,
-                    status: false,
-                    cycleStatus: false
-                });
-            }
-        }
-
-        store.set("plateau.cells", cells);
-    }
-
-    function _paintScenario() {
-        // plateau
-        $c.get("#plateau").css({
-            height: store.get("plateau.rows") + "vw",
-            width: store.get("plateau.columns") + "vw"
-        });
-
-        // cells
-        _.forEach(store.get("plateau.cells"), function (cell) {
-            $("<div/>")
-                .attr({
-                    id: cell.id
-                })
-                .addClass("plateau-cell")
-                .appendTo($c.get("#plateau"))
-                .click(function (event) {
-                    ui.cellClick(event);
-                });
-        });
+        $c.get('#config-plateau-max-rows').text(store.get('config.plateau.rows.max'));
+        $c.get('#config-plateau-max-columns').text(store.get('config.plateau.columns.max'));
+        $c.get('#config-plateau-min-rows').text(store.get('config.plateau.rows.min'));
+        $c.get('#config-plateau-min-columns').text(store.get('config.plateau.columns.min'));
     }
 
     function _updateUiStatus() {
@@ -100,42 +31,6 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         $c.get('#btn-reset-gol').attr('disabled', !created || running);
     }
 
-    function _setInitValues() {
-        $c.get('#form-rows')
-            .attr({
-                placeholder: config.plateau.rows.max,
-                min: config.plateau.rows.min,
-                max: config.plateau.rows.max
-            })
-            .val(config.plateau.rows.max)
-            .trigger("change");
-
-        $c.get('#form-columns')
-            .attr({
-                placeholder: config.plateau.columns.max,
-                min: config.plateau.columns.min,
-                max: config.plateau.columns.max
-            })
-            .val(config.plateau.columns.max)
-            .trigger("change");
-    }
-
-    function _initInterval() {
-        store.cycle.interval = setInterval(function () {
-            var lives = goOne();
-
-            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {
-                console.log('GAME OVER');
-                reset();
-                return;
-            }
-
-            store.cycle.current++;
-            console.log("Cycle: " + store.cycle.current);
-
-        }, store.cycle.time);
-    }
-
     function _start() {
         if (!store.get('cycle.running')) {
             store.set('cycle.running', true);
@@ -152,7 +47,7 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
     }
 
     function _registerUiEvents() {
-        // INPUTS
+        // inputs
         $c.get('#form-rows').bind('keyup change', function () {
             _btnPlateauStatus();
         });
@@ -161,38 +56,37 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
             _btnPlateauStatus();
         });
 
-        // BUTTONS
+        // buttons
         // btn plateau generator click event        
-        $c.get('#btn-plateau-generator')
-            .click(function () {
-                var rows = $c.get('#form-rows').val();
-                var columns = $c.get('#form-columns').val();
+        $c.get('#btn-plateau-generator').bind('click', function () {
+            var rows = $c.get('#form-rows').val();
+            var columns = $c.get('#form-columns').val();
 
-                if (_validatePlateauLimits(rows, columns)) {
-                    log.write('plateau.invalid_plateau');
-                    $c.get('#plateau-generator-control').addClass("has-danger");
-                    return;
-                }
+            if (plateau.validatePlateau(rows, columns)) {
+                log.write('plateau.invalid_plateau');
+                $c.get('#plateau-generator-control').addClass("has-danger");
+                return;
+            }
 
-                $c.get('#plateau-generator-control').removeClass("has-danger");
+            $c.get('#plateau-generator-control').removeClass("has-danger");
 
-                _setPlateauDimensions(rows, columns);
-                _setCells();
-                _paintScenario();
-            });
+            plateau.setPlateauDimensions(rows, columns);
+            plateau.setCells();
+            plateau.paintPlateau();
+        });
 
         // btn start click event
-        $c.get('#btn-start-gol').click(function () {
+        $c.get('#btn-start-gol').bind('click', function () {
             _start();
         });
 
         // btn pause click event
-        $c.get('#btn-pause-gol').click(function () {
+        $c.get('#btn-pause-gol').bind('click', function () {
             _pause();
         });
 
         // btn reset click event
-        $c.get('#btn-reset-gol').click(function () {
+        $c.get('#btn-reset-gol').bind('click', function () {
             _reset();
         });
     }
@@ -202,24 +96,14 @@ define(["json!config", "$cache", "store", "lodash", "log"], function (config, $c
         _registerUiEvents();
         _updateUiStatus();
         _showConfig();
-        _setInitValues();
+        plateau.setInitValues();
     };
 
-    ui.cellClick = function (event) {
-        if (store.get("cycle.running")) {
-            return;
-        }
-
-        var id = event.currentTarget.id;
-        var cell = _.find(store.get("plateau.cells"), {
-            id: id
-        });
-
-        cell.status = !cell.status;
-        _paintCellStatus(cell.status, id);
-    };
-
+    /* Return Module */
     return ui;
+
+
+
 
     // No modificar las variables del store directamente desde funciones privadas
     /*

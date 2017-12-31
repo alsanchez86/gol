@@ -21,7 +21,6 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 
 - ~~Limitar número de celdas al crear la cuadrícula~~
 - Usar redux para tener control sobre el estado del store (http://es.redux.js.org/).
-- Crear nuevos módulos para cada parte de la APP. Por ejemplo, módulo plateau, para controlar específicamente el plateau. Otro para control exclusivo de la interfaz y su estado, etc...
 - Memoria de celdas ya checkeadas en cada iteración, para no chequearla más de una vez.
 - Usar CANVAS para la representación del layout. Usar librería KONVA (https://konvajs.github.io/).
 - Checking for not valid cell's status

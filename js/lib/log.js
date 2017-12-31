@@ -58,5 +58,6 @@ define(["json!es", "lodash", "$cache"], function (es, _, $c) {
         return _.get(es, key);
     };
 
+    /* Return Module */
     return log;
 });
