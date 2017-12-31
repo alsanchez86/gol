@@ -14,68 +14,7 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         $c.get("#" + id).addClass("live");
     }
 
-    function _initInterval() {
-        store.cycle.interval = setInterval(function () {
-            var lives = goOne();
-
-            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {
-                console.log('GAME OVER');
-                reset();
-                return;
-            }
-
-            store.cycle.current++;
-            console.log("Cycle: " + store.cycle.current);
-
-        }, store.cycle.time);
-    }
-
-    /* Public Methods */
-    plateau.cellClick = function (event) {
-        if (store.get("cycle.running")) {
-            return;
-        }
-
-        var id = event.currentTarget.id;
-        var cell = _.find(store.get("plateau.cells"), {
-            id: id
-        });
-
-        cell.status = !cell.status;
-        _paintCellStatus(cell.status, id);
-    }
-
-    plateau.setInitValues = function () {
-        $c.get('#form-rows')
-            .attr({
-                placeholder: store.get('config.plateau.rows.max'),
-                min: store.get('config.plateau.rows.min'),
-                max: store.get('config.plateau.rows.max')
-            })
-            .val(store.get('config.plateau.rows.max'))
-            .trigger("change");
-
-        $c.get('#form-columns')
-            .attr({
-                placeholder: store.get('config.plateau.columns.max'),
-                min: store.get('config.plateau.columns.min'),
-                max: store.get('config.plateau.columns.max')
-            })
-            .val(store.get('config.plateau.columns.max'))
-            .trigger("change");
-    }
-
-    plateau.validatePlateau = function (rows, columns) {
-        rows = _.toInteger(rows);
-        columns = _.toInteger(columns);
-
-        var mins = rows >= store.get('config.plateau.rows.min') && columns >= store.get('config.plateau.columns.min');
-        var maxs = rows <= store.get('config.plateau.rows.max') && columns <= store.get('config.plateau.columns.max');
-
-        return !(mins && maxs);
-    }
-
-    plateau.setPlateauDimensions = function (rows, columns) {
+    function _setPlateauDimensions(rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
@@ -83,7 +22,7 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         store.set("plateau.columns", columns);
     }
 
-    plateau.setCells = function () {
+    function _setCells() {
         var rows = store.get("plateau.rows"),
             columns = store.get("plateau.columns"),
             cells = [];
@@ -104,7 +43,7 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         store.set("plateau.cells", cells);
     }
 
-    plateau.paintPlateau = function() {
+    function _paintPlateau() {
         // plateau
         $c.get("#plateau").css({
             height: store.get("plateau.rows") + "vw",
@@ -123,6 +62,76 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
                     ui.cellClick(event);
                 });
         });
+    }
+
+    /* Public Methods */
+    plateau.cellClick = function (event) {
+        if (store.get("cycle.running")) {
+            return;
+        }
+
+        var id = event.currentTarget.id;
+        var cell = _.find(store.get("plateau.cells"), {
+            id: id
+        });
+
+        cell.status = !cell.status;
+        _paintCellStatus(cell.status, id);
+    }
+
+    plateau.validatePlateau = function (rows, columns) {
+        rows = _.toInteger(rows);
+        columns = _.toInteger(columns);
+
+        var mins = rows >= store.get('config.plateau.rows.min') && columns >= store.get('config.plateau.columns.min');
+        var maxs = rows <= store.get('config.plateau.rows.max') && columns <= store.get('config.plateau.columns.max');
+
+        return mins && maxs;
+    }
+
+    plateau.initInterval = function () {
+        store.set('store.cycle.interval', setInterval(function () {
+            var lives = goOne();
+
+            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {
+                console.log('GAME OVER');
+                reset();
+                return;
+            }
+
+            store.cycle.current++;
+            console.log("Cycle: " + store.cycle.current);
+
+        }, store.get('store.cycle.time')));
+    }
+
+    plateau.create = function (rows, columns) {
+        _setPlateauDimensions(rows, columns);
+        _setCells();
+        _paintPlateau();
+    }
+
+    plateau.erasePlateau = function () {
+        // plateau
+        $c.get("#plateau").css({
+            height: "0vw",
+            width: "0vw"
+        });
+
+        // cells
+        /*
+        _.forEach(store.get("plateau.cells"), function (cell) {
+            $("<div/>")
+                .attr({
+                    id: cell.id
+                })
+                .addClass("plateau-cell")
+                .appendTo($c.get("#plateau"))
+                .click(function (event) {
+                    ui.cellClick(event);
+                });
+        });
+        */
     }
 
     /* Return Module */

@@ -25,7 +25,7 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
         $c.get('#form-columns').attr('disabled', created || running);
 
         // ui buttons
-        $c.get('#btn-plateau-generator').attr('disabled', !created || running);
+        $c.get('#btn-plateau-generator').attr('disabled', created || running);
         $c.get('#btn-start-gol').attr('disabled', !created || running);
         $c.get('#btn-pause-gol').attr('disabled', !created || !running);
         $c.get('#btn-reset-gol').attr('disabled', !created || running);
@@ -34,49 +34,45 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
     function _start() {
         if (!store.get('cycle.running')) {
             store.set('cycle.running', true);
+            plateau.initInterval();
             _updateUiStatus();
-            _initInterval();
         }
     }
 
-    function _btnPlateauStatus() {
-        var rows = $c.get('#form-rows').val();
-        var columns = $c.get('#form-columns').val();
-        var noChange = store.get("plateau.rows") == rows && store.get("plateau.columns") == columns;
+    function _reset() {
+        // clear interval
+        clearInterval(store.get('cycle.interval'));
 
-        $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns || noChange);
+        // reset store
+        store.set('plateau.cells', []);
+        store.set('plateau.rows', 0);
+        store.set('plateau.columns', 0);
+        store.set('plateau.created', false);
+        store.set('cycle.running', false);
+        store.set('cycle.current', 0);
+
+        plateau.erasePlateau();
+        
+        _updateUiStatus();
     }
 
     function _registerUiEvents() {
-        // inputs
-        $c.get('#form-rows').bind('keyup change', function () {
-            _btnPlateauStatus();
-        });
-
-        $c.get('#form-columns').bind('keyup change', function () {
-            _btnPlateauStatus();
-        });
-
-        // buttons
         // btn plateau generator click event        
         $c.get('#btn-plateau-generator').bind('click', function () {
-            // disable after cliclk
-            $(this).attr('disabled', true);
-
             var rows = $c.get('#form-rows').val();
             var columns = $c.get('#form-columns').val();
 
-            if (plateau.validatePlateau(rows, columns)) {
+            if (!plateau.validatePlateau(rows, columns)) {
                 log.write('plateau.invalid_plateau');
                 $c.get('#plateau-generator-control').addClass("has-danger");
                 return;
             }
 
             $c.get('#plateau-generator-control').removeClass("has-danger");
+            plateau.create(rows, columns);
+            store.set('plateau.created', true);
 
-            plateau.setPlateauDimensions(rows, columns);
-            plateau.setCells();
-            plateau.paintPlateau();
+            _updateUiStatus();
         });
 
         // btn start click event
@@ -95,12 +91,30 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
         });
     }
 
+    function _uiInitValues() {
+        $c.get('#form-rows')
+            .attr({
+                placeholder: store.get('config.plateau.rows.max'),
+                min: store.get('config.plateau.rows.min'),
+                max: store.get('config.plateau.rows.max')
+            })
+            .val(store.get('config.plateau.rows.max'));
+
+        $c.get('#form-columns')
+            .attr({
+                placeholder: store.get('config.plateau.columns.max'),
+                min: store.get('config.plateau.columns.min'),
+                max: store.get('config.plateau.columns.max')
+            })
+            .val(store.get('config.plateau.columns.max'));
+    }
+
     /* Public Methods */
     ui.init = function () {
         _registerUiEvents();
-        _updateUiStatus();
         _showConfig();
-        plateau.setInitValues();
+        _uiInitValues();
+        _updateUiStatus();
     };
 
     /* Return Module */
