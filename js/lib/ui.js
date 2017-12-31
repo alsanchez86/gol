@@ -42,8 +42,9 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
     function _btnPlateauStatus() {
         var rows = $c.get('#form-rows').val();
         var columns = $c.get('#form-columns').val();
+        var noChange = store.get("plateau.rows") == rows && store.get("plateau.columns") == columns;
 
-        $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns);
+        $c.get('#btn-plateau-generator').attr('disabled', !rows || !columns || noChange);
     }
 
     function _registerUiEvents() {
@@ -59,6 +60,9 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
         // buttons
         // btn plateau generator click event        
         $c.get('#btn-plateau-generator').bind('click', function () {
+            // disable after cliclk
+            $(this).attr('disabled', true);
+
             var rows = $c.get('#form-rows').val();
             var columns = $c.get('#form-columns').val();
 
