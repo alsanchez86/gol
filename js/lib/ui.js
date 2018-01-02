@@ -1,8 +1,7 @@
-define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, log, plateau) {
+define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exports, $c, store, _, log, plateau) {
     /* Private Vars */
 
     /* Public Vars */
-    var ui = {};
 
     /* Private Methods */
     function _showConfig() {
@@ -52,7 +51,7 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
         store.set('cycle.current', 0);
 
         plateau.erasePlateau();
-        
+
         _updateUiStatus();
     }
 
@@ -110,18 +109,12 @@ define(["$cache", "store", "lodash", "log", "plateau"], function ($c, store, _, 
     }
 
     /* Public Methods */
-    ui.init = function () {
+    exports.init = function () {
         _registerUiEvents();
         _showConfig();
         _uiInitValues();
         _updateUiStatus();
     };
-
-    /* Return Module */
-    return ui;
-
-
-
 
     // No modificar las variables del store directamente desde funciones privadas
     /*

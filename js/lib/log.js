@@ -3,14 +3,13 @@
     - Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 */
 
-define(["json!es", "lodash", "$cache"], function (es, _, $c) {
+define(["exports", "json!es", "lodash", "$cache"], function (exports, es, _, $c) {
     /* Private Vars */
     var replace = "%%";
-    
-    /* Public Vars */
-    var log = {};
 
-    /* Private Methods */       
+    /* Public Vars */
+
+    /* Private Methods */
 
     /* Public Methods */
     /*
@@ -18,7 +17,7 @@ define(["json!es", "lodash", "$cache"], function (es, _, $c) {
         @param array: Array. [replace %%]
         @return void
     */
-    log.write = function (key, array) {
+    exports.write = function (key, array) {
         var message = this.getFromJson(key),
             type = "";
 
@@ -37,7 +36,7 @@ define(["json!es", "lodash", "$cache"], function (es, _, $c) {
             }
             key = message;
         }
-        
+
         // navigator console
         console.log(key);
 
@@ -54,10 +53,7 @@ define(["json!es", "lodash", "$cache"], function (es, _, $c) {
             );
     };
 
-    log.getFromJson = function (key) {
+    exports.getFromJson = function (key) {
         return _.get(es, key);
     };
-
-    /* Return Module */
-    return log;
 });

@@ -1,8 +1,7 @@
-define(["$cache", "store", "lodash"], function ($c, store, _) {
+define(["exports", "$cache", "store", "lodash"], function (exports, $c, store, _) {
     /* Private Vars */
 
     /* Public Vars */
-    var plateau = {};
 
     /* Private Methods */
     function _paintCellStatus(status, id) {
@@ -65,7 +64,7 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
     }
 
     /* Public Methods */
-    plateau.cellClick = function (event) {
+    exports.cellClick = function (event) {
         if (store.get("cycle.running")) {
             return;
         }
@@ -79,7 +78,7 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         _paintCellStatus(cell.status, id);
     }
 
-    plateau.validatePlateau = function (rows, columns) {
+    exports.validatePlateau = function (rows, columns) {
         rows = _.toInteger(rows);
         columns = _.toInteger(columns);
 
@@ -89,7 +88,7 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         return mins && maxs;
     }
 
-    plateau.initInterval = function () {
+    exports.initInterval = function () {
         store.set('store.cycle.interval', setInterval(function () {
             var lives = goOne();
 
@@ -105,13 +104,13 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         }, store.get('store.cycle.time')));
     }
 
-    plateau.create = function (rows, columns) {
+    exports.create = function (rows, columns) {
         _setPlateauDimensions(rows, columns);
         _setCells();
         _paintPlateau();
     }
 
-    plateau.erasePlateau = function () {
+    exports.erasePlateau = function () {
         // plateau
         $c.get("#plateau").css({
             height: "0vw",
@@ -133,7 +132,4 @@ define(["$cache", "store", "lodash"], function ($c, store, _) {
         });
         */
     }
-
-    /* Return Module */
-    return plateau;
 });

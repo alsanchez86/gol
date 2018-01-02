@@ -4,11 +4,11 @@
     - Implementar con REDUX. Puede que ya no sea necesario este módulo.
 */
 
-define(["log", "lodash", "json!config"], function (log, _, config) {
-    /* Public Vars */
+define(["exports", "log", "lodash", "json!config"], function (exports, log, _, config) {
+    /* Private Vars */
     var _this = {
         config: (function () {
-            if (typeof config === 'object' && config.plateau.rows && config.plateau.columns){
+            if (typeof config === 'object' && config.plateau.rows && config.plateau.columns) {
                 return config;
             }
             return false;
@@ -70,24 +70,22 @@ define(["log", "lodash", "json!config"], function (log, _, config) {
     };
 
     /* Public Vars */
-    var store = {};
+
+    /* Private Methods */
 
     /* Public Methods */
-    store.set = function (key, value) {
+    exports.set = function (key, value) {
         _.set(_this, key, value);
         log.write("store.setting_property", [key, value]);
     }
 
-    store.get = function (key) {
+    exports.get = function (key) {
         return _.get(_this, key);
     }
 
-    store.remove = function (key) {
+    exports.remove = function (key) {
         if (_.unset(_this, key)) {
             log.write("store.remove_property", [key]);
         }
     }
-
-    /* Return Module */
-    return store;
 });

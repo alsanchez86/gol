@@ -1,12 +1,10 @@
-define(["lodash"], function (_) {
-    var helpers = {};
-
+define(["exports", "lodash"], function (exports, _) {    
     /*
         @param obj: Object
         @param key: String (JSON nomenclature)
         @return String or Undefined
     */
-    helpers.getPropertyValue = function (obj, key) {
+    exports.getPropertyValue = function (obj, key) {
         if (!key || !_.isString(key)) {
             return;
         }
@@ -18,7 +16,4 @@ define(["lodash"], function (_) {
         }
         return obj;
     };
-
-    /* Return Module */
-    return helpers;
 });

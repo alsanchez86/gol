@@ -1,13 +1,12 @@
 /*
     Cache read only
 */
-define(["jquery"], function ($) {
+define(["exports", "jquery"], function (exports, $) {
     /* Private Vars */
 
     var _this = {};
 
     /* Public Vars */
-    var cache = {};
 
     /* Private Methods */
     function _set(selector) {
@@ -15,7 +14,7 @@ define(["jquery"], function ($) {
     }
 
     /* Public Methods */
-    cache.get = function (selector, force) {
+    exports.get = function (selector, force) {
         if (_this[selector] !== undefined && force === undefined) {
             return _this[selector];
         }
@@ -23,7 +22,4 @@ define(["jquery"], function ($) {
         _set(selector);
         return _this[selector];
     };
-
-    /* Return Module */
-    return cache;
 });
