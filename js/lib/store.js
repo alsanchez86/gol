@@ -4,8 +4,10 @@
     - Implementar con REDUX. Puede que ya no sea necesario este módulo.
 */
 
-define(["exports", "log", "lodash", "json!config"], function (exports, log, _, config) {
+define(["require", "exports", "log", "lodash", "json!config"], function (require, exports, log, _, config) {
     /* Private Vars */
+    var log = require('log'); // circular dependency
+
     var _this = {
         config: (function () {
             if (typeof config === 'object' && config.plateau.rows && config.plateau.columns) {

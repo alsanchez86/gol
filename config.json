@@ -8,5 +8,8 @@
             "max": 10,
             "min": 5
         }        
+    },
+    "console": {
+        "max_length_output": 400
     }
 }

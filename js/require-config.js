@@ -52,7 +52,7 @@ require.config(
                     deps: ["json", "lodash", "_$"]
                 },
                 store: {
-                    deps: ["log", "lodash", "json"]
+                    deps: ["lodash", "json"]
                 },
                 plateau: {
                     deps: ["_$", "store", "log",  "lodash"]

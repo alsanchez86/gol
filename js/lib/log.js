@@ -1,11 +1,12 @@
 /*
     TODO:
-    - Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
+    - Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores    
 */
 
-define(["exports", "json!es", "lodash", "_$"], function (exports, es, _, _$) {
+define(["require", "exports", "json!es", "lodash", "_$", "store"], function (require, exports, es, _, _$, store) {    
     /* Private Vars */
-    var replace = "%%";
+    var replace = "%%";  
+    var store = require('store'); // circular dependency
 
     /* Public Vars */
 
@@ -19,19 +20,13 @@ define(["exports", "json!es", "lodash", "_$"], function (exports, es, _, _$) {
     */
     exports.write = function (key, array) {
         var message = this.getFromJson(key),
+            p = _$.get('<p/>'),
             type = "";
 
         if (message && _.isString(message)) {
-            if (
-                message.indexOf(replace) !== -1 &&
-                !_.isUndefined(array) &&
-                _.isArray(array)
-            ) {
+            if (message.indexOf(replace) !== -1 && !_.isUndefined(array) && _.isArray(array)) {
                 _.forEach(array, function (value) {
-                    message = message.replace(
-                        replace,
-                        _.isArray(value) ? JSON.stringify(value) : value
-                    );
+                    message = message.replace(replace, _.isArray(value) ? JSON.stringify(value) : value);
                 });
             }
             key = message;
@@ -40,16 +35,12 @@ define(["exports", "json!es", "lodash", "_$"], function (exports, es, _, _$) {
         // navigator console
         console.log(key);
 
-        // app console
-        _$.get("#console-output")
-            .html(
-                "<p class=" +
-                type +
-                '><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;' +
-                key +
-                "</p>" +
-                _$.get("#console-output").html()
-            );
+        // app console    
+        if (key.length > store.get('config.console.max_length_output')){
+            key = key.substring(0, store.get('config.console.max_length_output')) + '...';
+        }
+        
+        _$.get("#console-output").prepend("<p class=" + type + '><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;' + key + "</p>");
     };
 
     exports.getFromJson = function (key) {
