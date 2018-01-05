@@ -1,6 +1,7 @@
 {
     "general": {
-        "load_config": "Archivo de configuración cargado."
+        "load_config": "Archivo de configuración cargado.",
+        "game_over": "Game Over."
     },
     "plateau": {
         "invalid_plateau": "Numero de celdas inválido. Por favor, introduzca un número de celdas válido comprendido entre el mínimo y el máximo permitido."

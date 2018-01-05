@@ -55,7 +55,7 @@ require.config(
                     deps: ["log", "lodash", "json"]
                 },
                 plateau: {
-                    deps: ["$cache", "store", "lodash"]
+                    deps: ["$cache", "store", "log",  "lodash"]
                 },
                 ui: {
                     deps: ["$cache", "store", "lodash", "log", "plateau"]

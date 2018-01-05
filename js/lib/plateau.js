@@ -1,4 +1,4 @@
-define(["exports", "$cache", "store", "lodash"], function (exports, $c, store, _) {
+define(["exports", "$cache", "store", "log", "lodash"], function (exports, $c, store, log, _) {
     /* Private Vars */
 
     /* Public Vars */
@@ -93,18 +93,17 @@ define(["exports", "$cache", "store", "lodash"], function (exports, $c, store, _
     }
 
     exports.initInterval = function () {
+        store.set('cycle.running', true);
         store.set('store.cycle.interval', setInterval(function () {
             var lives = goOne();
 
-            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {
-                console.log('GAME OVER');
-                reset();
+            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {                
+                log.write('general.game_over');
+                ui.pause();
                 return;
             }
 
-            store.cycle.current++;
-            console.log("Cycle: " + store.cycle.current);
-
+            store.set('cycle.current', store.get('cycle.current')++);                
         }, store.get('store.cycle.time')));
     }
 
@@ -112,11 +111,18 @@ define(["exports", "$cache", "store", "lodash"], function (exports, $c, store, _
         _setPlateauDimensions(rows, columns);
         _setCells();
         _paintPlateau();
+
+        store.set('plateau.created', true);
     }
 
     exports.erase = function () {
         _setPlateauDimensions(0, 0);
         _setCells();
-        _paintPlateau();
+        _paintPlateau();        
+        clearInterval(store.get('cycle.interval'));
+
+        store.set('plateau.created', false);
+        store.set('cycle.running', false);
+        store.set('cycle.current', 0);
     }
 });

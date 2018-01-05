@@ -30,7 +30,7 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
         $c.get('#btn-reset-gol').attr('disabled', !created || running);
     }
 
-    function _create() {
+    function _createPlateau() {
         var rows = $c.get('#form-rows').val();
         var columns = $c.get('#form-columns').val();
 
@@ -41,31 +41,18 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
         }
 
         $c.get('#plateau-generator-control').removeClass("has-danger");
-        plateau.create(rows, columns);
-        store.set('plateau.created', true);
+        plateau.create(rows, columns);        
         _updateUiStatus();
     }
 
     function _start() {
-        if (!store.get('cycle.running')) {
-            store.set('cycle.running', true);
+        if (!store.get('cycle.running')) {            
             plateau.initInterval();
             _updateUiStatus();
         }
     }
 
-    function _reset() {
-        // clear interval
-        clearInterval(store.get('cycle.interval'));
-
-        // reset store
-        store.set('plateau.cells', []);
-        store.set('plateau.rows', 0);
-        store.set('plateau.columns', 0);
-        store.set('plateau.created', false);
-        store.set('cycle.running', false);
-        store.set('cycle.current', 0);
-
+    function _reset() {                    
         plateau.erase();
         _updateUiStatus();
     }
@@ -73,7 +60,7 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
     function _registerUiEvents() {
         // btn plateau generator click event        
         $c.get('#btn-plateau-generator').bind('click', function () {
-            _create();
+            _createPlateau();
         });
 
         // btn start click event
