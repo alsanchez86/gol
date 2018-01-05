@@ -23,19 +23,18 @@ define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store
 
     function _setCells() {
         var rows = store.get("plateau.rows"),
-            columns = store.get("plateau.columns"),
-            cells = [];
+            columns = store.get("plateau.columns");
 
         for (i = 1; i <= rows; i++) {
             // columns
             for (u = 1; u <= columns; u++) {
-                cells.push({
+                store.add('plateau.cells', cell.new({
                     id: u + "-" + i,
                     x: u,
                     y: i,
                     status: false,
                     cycleStatus: false
-                });
+                }));               
             }
         }
 
@@ -97,15 +96,15 @@ define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store
     }
 
     function _endOne() {
+        store.set('cycle.current', store.get('cycle.current') ++);
+
         _.each(
             store.get('plateau.cells'),
             function (cell) {
                 cell.status = cell.cycleStatus;
                 _paintCellStatus(cell.status, cell.id);
             }
-        );
-
-        store.set('cycle.current', store.get('cycle.current') ++);
+        );        
     }
 
     /* Public Methods */

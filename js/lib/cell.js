@@ -3,12 +3,16 @@
     - Irá dentro del store
 */
 
-define(function () {
-    var _this = {
-        id: u + "-" + i,
-        x: u,
-        y: i,
-        status: false,
-        cycleStatus: false
-    };
+define(function (){
+    var cell = function () {
+        this.id =  "";
+        this.x = 0;
+        this.y = 0;
+        this.status = false;
+        this.cycleStatus = false;
+    }    
+
+    exports.new = function (properties) {
+        
+    }
 });

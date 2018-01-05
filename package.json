@@ -18,5 +18,8 @@
     "http-server": "^0.10.0",
     "requirejs": "*",
     "run-sequence": "^2.2.0"
+  },
+  "dependencies": {
+    "redux": "^3.7.2"
   }
 }
