@@ -86,15 +86,15 @@ button.btn-plateau-generator {
 
 div.plateau-generator-block {
     button.btn-primary {
-        @include btn($primary-color-text);
+        @include btn($primary-text-color, $primary-text-color);
     }
 
     button.btn-warning {
-        @include btn($btn-warning-color, $btn-warning-color, $btn-warning-bg, $btn-warning-bg);
+        @include btn($primary-text-color, $primary-text-color, $btn-warning-bg, $btn-warning-bg);
     }
 
     button.btn-danger {
-        @include btn($btn-danger-color, $btn-danger-color, $btn-danger-bg, $btn-danger-bg);
+        @include btn($primary-text-color, $primary-text-color, $btn-danger-bg, $btn-danger-bg);
     }
 }
 

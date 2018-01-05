@@ -49,18 +49,22 @@ define(["exports", "$cache", "store", "lodash"], function (exports, $c, store, _
             width: store.get("plateau.columns") + "vw"
         });
 
-        // cells
-        _.forEach(store.get("plateau.cells"), function (cell) {
-            $("<div/>")
-                .attr({
-                    id: cell.id
-                })
-                .addClass("plateau-cell")
-                .appendTo($c.get("#plateau"))
-                .click(function (event) {
-                    ui.cellClick(event);
-                });
-        });
+        // cells       
+        if (store.get("plateau.cells").length){
+            _.forEach(store.get("plateau.cells"), function (cell) {
+                $("<div/>")
+                    .attr({
+                        id: cell.id
+                    })
+                    .addClass("plateau-cell")
+                    .appendTo($c.get("#plateau"))
+                    .click(function (event) {
+                        ui.cellClick(event);
+                    });
+            });    
+        }else{
+            $c.get("#plateau").empty();
+        }     
     }
 
     /* Public Methods */
@@ -110,26 +114,9 @@ define(["exports", "$cache", "store", "lodash"], function (exports, $c, store, _
         _paintPlateau();
     }
 
-    exports.erasePlateau = function () {
-        // plateau
-        $c.get("#plateau").css({
-            height: "0vw",
-            width: "0vw"
-        });
-
-        // cells
-        /*
-        _.forEach(store.get("plateau.cells"), function (cell) {
-            $("<div/>")
-                .attr({
-                    id: cell.id
-                })
-                .addClass("plateau-cell")
-                .appendTo($c.get("#plateau"))
-                .click(function (event) {
-                    ui.cellClick(event);
-                });
-        });
-        */
+    exports.erase = function () {
+        _setPlateauDimensions(0, 0);
+        _setCells();
+        _paintPlateau();
     }
 });

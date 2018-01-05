@@ -30,6 +30,22 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
         $c.get('#btn-reset-gol').attr('disabled', !created || running);
     }
 
+    function _create() {
+        var rows = $c.get('#form-rows').val();
+        var columns = $c.get('#form-columns').val();
+
+        if (!plateau.validatePlateau(rows, columns)) {
+            log.write('plateau.invalid_plateau');
+            $c.get('#plateau-generator-control').addClass("has-danger");
+            return;
+        }
+
+        $c.get('#plateau-generator-control').removeClass("has-danger");
+        plateau.create(rows, columns);
+        store.set('plateau.created', true);
+        _updateUiStatus();
+    }
+
     function _start() {
         if (!store.get('cycle.running')) {
             store.set('cycle.running', true);
@@ -50,28 +66,14 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
         store.set('cycle.running', false);
         store.set('cycle.current', 0);
 
-        plateau.erasePlateau();
-
+        plateau.erase();
         _updateUiStatus();
     }
 
     function _registerUiEvents() {
         // btn plateau generator click event        
         $c.get('#btn-plateau-generator').bind('click', function () {
-            var rows = $c.get('#form-rows').val();
-            var columns = $c.get('#form-columns').val();
-
-            if (!plateau.validatePlateau(rows, columns)) {
-                log.write('plateau.invalid_plateau');
-                $c.get('#plateau-generator-control').addClass("has-danger");
-                return;
-            }
-
-            $c.get('#plateau-generator-control').removeClass("has-danger");
-            plateau.create(rows, columns);
-            store.set('plateau.created', true);
-
-            _updateUiStatus();
+            _create();
         });
 
         // btn start click event
