@@ -3,7 +3,7 @@
     - Guardar en el localstorage el historial de mensajes, distinguiendo entre normales y errores
 */
 
-define(["exports", "json!es", "lodash", "$cache"], function (exports, es, _, $c) {
+define(["exports", "json!es", "lodash", "_$"], function (exports, es, _, _$) {
     /* Private Vars */
     var replace = "%%";
 
@@ -41,15 +41,14 @@ define(["exports", "json!es", "lodash", "$cache"], function (exports, es, _, $c)
         console.log(key);
 
         // app console
-        $c
-            .get("#console-output")
+        _$.get("#console-output")
             .html(
                 "<p class=" +
                 type +
                 '><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;' +
                 key +
                 "</p>" +
-                $c.get("#console-output").html()
+                _$.get("#console-output").html()
             );
     };
 

@@ -1,4 +1,4 @@
-define(["exports", "$cache", "store", "log", "lodash"], function (exports, $c, store, log, _) {
+define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store, log, _) {
     /* Private Vars */
 
     /* Public Vars */
@@ -6,11 +6,11 @@ define(["exports", "$cache", "store", "log", "lodash"], function (exports, $c, s
     /* Private Methods */
     function _paintCellStatus(status, id) {
         if (!status) {
-            $c.get("#" + id).removeClass("live");
+            _$.get("#" + id).removeClass("live");
             return;
         }
 
-        $c.get("#" + id).addClass("live");
+        _$.get("#" + id).addClass("live");
     }
 
     function _setPlateauDimensions(rows, columns) {
@@ -44,7 +44,7 @@ define(["exports", "$cache", "store", "log", "lodash"], function (exports, $c, s
 
     function _paintPlateau() {
         // plateau
-        $c.get("#plateau").css({
+        _$.get("#plateau").css({
             height: store.get("plateau.rows") + "vw",
             width: store.get("plateau.columns") + "vw"
         });
@@ -57,13 +57,13 @@ define(["exports", "$cache", "store", "log", "lodash"], function (exports, $c, s
                         id: cell.id
                     })
                     .addClass("plateau-cell")
-                    .appendTo($c.get("#plateau"))
+                    .appendTo(_$.get("#plateau"))
                     .click(function (event) {
                         ui.cellClick(event);
                     });
             });    
         }else{
-            $c.get("#plateau").empty();
+            _$.get("#plateau").empty();
         }     
     }
 

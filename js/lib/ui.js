@@ -1,4 +1,4 @@
-define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exports, $c, store, _, log, plateau) {
+define(["exports", "_$", "store", "lodash", "log", "plateau"], function (exports, _$, store, _, log, plateau) {
     /* Private Vars */
 
     /* Public Vars */
@@ -6,10 +6,10 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
     /* Private Methods */
     function _showConfig() {
         // show config on ui
-        $c.get('#config-plateau-max-rows').text(store.get('config.plateau.rows.max'));
-        $c.get('#config-plateau-max-columns').text(store.get('config.plateau.columns.max'));
-        $c.get('#config-plateau-min-rows').text(store.get('config.plateau.rows.min'));
-        $c.get('#config-plateau-min-columns').text(store.get('config.plateau.columns.min'));
+        _$.get('#config-plateau-max-rows').text(store.get('config.plateau.rows.max'));
+        _$.get('#config-plateau-max-columns').text(store.get('config.plateau.columns.max'));
+        _$.get('#config-plateau-min-rows').text(store.get('config.plateau.rows.min'));
+        _$.get('#config-plateau-min-columns').text(store.get('config.plateau.columns.min'));
     }
 
     function _updateUiStatus() {
@@ -17,30 +17,30 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
         var running = store.get('cycle.running');
 
         // plateau
-        $c.get('#plateau').attr('disabled', !created || running);
+        _$.get('#plateau').attr('disabled', !created || running);
 
         // form
-        $c.get('#form-rows').attr('disabled', created || running);
-        $c.get('#form-columns').attr('disabled', created || running);
+        _$.get('#form-rows').attr('disabled', created || running);
+        _$.get('#form-columns').attr('disabled', created || running);
 
         // ui buttons
-        $c.get('#btn-plateau-generator').attr('disabled', created || running);
-        $c.get('#btn-start-gol').attr('disabled', !created || running);
-        $c.get('#btn-pause-gol').attr('disabled', !created || !running);
-        $c.get('#btn-reset-gol').attr('disabled', !created || running);
+        _$.get('#btn-plateau-generator').attr('disabled', created || running);
+        _$.get('#btn-start-gol').attr('disabled', !created || running);
+        _$.get('#btn-pause-gol').attr('disabled', !created || !running);
+        _$.get('#btn-reset-gol').attr('disabled', !created || running);
     }
 
     function _createPlateau() {
-        var rows = $c.get('#form-rows').val();
-        var columns = $c.get('#form-columns').val();
+        var rows = _$.get('#form-rows').val();
+        var columns = _$.get('#form-columns').val();
 
         if (!plateau.validatePlateau(rows, columns)) {
             log.write('plateau.invalid_plateau');
-            $c.get('#plateau-generator-control').addClass("has-danger");
+            _$.get('#plateau-generator-control').addClass("has-danger");
             return;
         }
 
-        $c.get('#plateau-generator-control').removeClass("has-danger");
+        _$.get('#plateau-generator-control').removeClass("has-danger");
         plateau.create(rows, columns);        
         _updateUiStatus();
     }
@@ -59,28 +59,28 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
 
     function _registerUiEvents() {
         // btn plateau generator click event        
-        $c.get('#btn-plateau-generator').bind('click', function () {
+        _$.get('#btn-plateau-generator').bind('click', function () {
             _createPlateau();
         });
 
         // btn start click event
-        $c.get('#btn-start-gol').bind('click', function () {
+        _$.get('#btn-start-gol').bind('click', function () {
             _start();
         });
 
         // btn pause click event
-        $c.get('#btn-pause-gol').bind('click', function () {
+        _$.get('#btn-pause-gol').bind('click', function () {
             _pause();
         });
 
         // btn reset click event
-        $c.get('#btn-reset-gol').bind('click', function () {
+        _$.get('#btn-reset-gol').bind('click', function () {
             _reset();
         });
     }
 
     function _uiInitValues() {
-        $c.get('#form-rows')
+        _$.get('#form-rows')
             .attr({
                 placeholder: store.get('config.plateau.rows.max'),
                 min: store.get('config.plateau.rows.min'),
@@ -88,7 +88,7 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
             })
             .val(store.get('config.plateau.rows.max'));
 
-        $c.get('#form-columns')
+        _$.get('#form-columns')
             .attr({
                 placeholder: store.get('config.plateau.columns.max'),
                 min: store.get('config.plateau.columns.min'),
@@ -129,7 +129,7 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
             },
             paintScenario = function () {
                 // plateau
-                $c.get('#plateau').css({
+                _$.get('#plateau').css({
                     height: store.plateau.rows + "vw",
                     width: store.plateau.columns + "vw"
                 });
@@ -144,7 +144,7 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
                             })
                             .addClass('plateau-cell')
                             .appendTo(
-                                $c.get('#plateau')
+                                _$.get('#plateau')
                             )
                             .click(function (event) {
                                 cellClick(event);
@@ -278,15 +278,15 @@ define(["exports", "$cache", "store", "lodash", "log", "plateau"], function (exp
             },
             startedUi = function () {
                 if (store.cycle.running) {
-                    $c.get('#plateau').attr('disabled', true);
-                    $c.get('#btn-start-gol').attr('disabled', true);
-                    $c.get('#btn-pause-gol').removeAttr('disabled');
+                    _$.get('#plateau').attr('disabled', true);
+                    _$.get('#btn-start-gol').attr('disabled', true);
+                    _$.get('#btn-pause-gol').removeAttr('disabled');
                     return;
                 }
 
-                $c.get('#plateau').removeAttr('disabled');
-                $c.get('#btn-start-gol').removeAttr('disabled');
-                $c.get('#btn-pause-gol').attr('disabled', true);
+                _$.get('#plateau').removeAttr('disabled');
+                _$.get('#btn-start-gol').removeAttr('disabled');
+                _$.get('#btn-pause-gol').attr('disabled', true);
             },
             checkCellStatus = function (cell, colindantes, field) {                
                 // Cada celda con uno o ningún vecino          -> muere.
