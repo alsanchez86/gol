@@ -26,7 +26,8 @@ define(["require", "exports", "log", "lodash", "json!config"], function (require
             created: false,
             rows: 0,
             columns: 0,
-            cells: []
+            cells: [],
+            lives: []
         },
         colindantesAxis: [{
                 id: 1,

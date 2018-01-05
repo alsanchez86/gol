@@ -50,7 +50,7 @@ define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store
         });
 
         // cells       
-        if (store.get("plateau.cells").length){
+        if (store.get("plateau.cells").length) {
             _.forEach(store.get("plateau.cells"), function (cell) {
                 $("<div/>")
                     .attr({
@@ -61,10 +61,51 @@ define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store
                     .click(function (event) {
                         ui.cellClick(event);
                     });
-            });    
-        }else{
+            });
+        } else {
             _$.get("#plateau").empty();
-        }     
+        }
+    }
+
+    function _goOne() {
+        // update lives on store        
+        store.set('plateau.lives', _.filter(store.get('plateau.cells'), function (cell) {
+            return cell.status === true;
+        }));
+
+        if (store.get('plateau.lives').length > 0) {
+            // determine cycleStatus by status
+            _.each(store.get('plateau.lives'), function (cell) {
+                // get colindantes
+                var colindantes = _getColindantes(cell);
+                // check current cell status
+                cell.cycleStatus = _checkCellStatus(cell, colindantes, 'status');
+                // check deads colindantes for better performance
+                _checkDeadsColindantes(colindantes);
+            });
+
+            // validate cycleStatus by cycleStatus
+            _.each(store.plateau.cells, function (cell) {
+                if (cell.cycleStatus && cell.status != cell.cycleStatus) {
+                    // get colindantes
+                    var colindantes = _getColindantes(cell);
+                    // check current cell status
+                    cell.cycleStatus = _checkCellStatus(cell, colindantes, 'cycleStatus');
+                }
+            });
+        }
+    }
+
+    function _endOne() {
+        _.each(
+            store.get('plateau.cells'),
+            function (cell) {
+                cell.status = cell.cycleStatus;
+                _paintCellStatus(cell.status, cell.id);
+            }
+        );
+
+        store.set('cycle.current', store.get('cycle.current') ++);
     }
 
     /* Public Methods */
@@ -95,15 +136,15 @@ define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store
     exports.initInterval = function () {
         store.set('cycle.running', true);
         store.set('store.cycle.interval', setInterval(function () {
-            var lives = goOne();
+            _goOne();
 
-            if (lives.length === 0 || (!!store.cycle.limit && (store.cycle.current === store.cycle.limit))) {                
+            if (store.get('plateau.lives').length === 0 || (!!store.get('cycle.limit') && (store.get('cycle.current') === store.get('cycle.limit')))) {
                 log.write('general.game_over');
                 ui.pause();
                 return;
             }
-
-            store.set('cycle.current', store.get('cycle.current')++);                
+            
+            _endOne();
         }, store.get('store.cycle.time')));
     }
 
@@ -118,7 +159,7 @@ define(["exports", "_$", "store", "log", "lodash"], function (exports, _$, store
     exports.erase = function () {
         _setPlateauDimensions(0, 0);
         _setCells();
-        _paintPlateau();        
+        _paintPlateau();
         clearInterval(store.get('cycle.interval'));
 
         store.set('plateau.created', false);
