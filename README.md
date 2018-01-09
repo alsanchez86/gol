@@ -20,7 +20,7 @@ Inspired in: https://www.youtube.com/watch?v=CgOcEZinQ2I
 ### Roadmap
 
 - ~~Limitar número de celdas al crear la cuadrícula~~
-- Crear objeto prototype para cell
+- Clase Cell dentro del módulo plateau
 - Usar redux para tener control sobre el estado del store (http://es.redux.js.org/).
 - Memoria de celdas ya checkeadas en cada iteración, para no chequearla más de una vez.
 - Usar CANVAS para la representación del layout. Usar librería KONVA (https://konvajs.github.io/).
